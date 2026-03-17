@@ -1,1038 +1,603 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aurum — Fine Dining</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --gold: #C9A96E;
-      --gold-light: #E8D5A3;
-      --gold-dark: #8B6914;
-      --black: #0A0A0A;
-      --deep: #111008;
-      --off-white: #F5F0E8;
-      --muted: #7A7060;
-      --border: rgba(201,169,110,0.25);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--black);
-      color: var(--off-white);
-      font-family: 'Tenor Sans', sans-serif;
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.8rem 5vw;
-      transition: background 0.4s, padding 0.4s;
-    }
-    nav.scrolled {
-      background: rgba(10,10,10,0.95);
-      backdrop-filter: blur(12px);
-      padding: 1.1rem 5vw;
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      font-weight: 300;
-      letter-spacing: 0.25em;
-      color: var(--gold);
-      text-decoration: none;
-    }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a {
-      color: var(--off-white);
-      text-decoration: none;
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      opacity: 0.8;
-      transition: opacity 0.2s, color 0.2s;
-    }
-    .nav-links a:hover { opacity: 1; color: var(--gold); }
-    .nav-reserve {
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      padding: 0.55rem 1.4rem;
-      text-decoration: none;
-      transition: background 0.25s, color 0.25s;
-    }
-    .nav-reserve:hover { background: var(--gold); color: var(--black); }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .hamburger span { width: 24px; height: 1px; background: var(--off-white); display: block; transition: 0.3s; }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: grid; place-items: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 60% 40%, rgba(201,169,110,0.07) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 80% at 20% 80%, rgba(139,105,20,0.05) 0%, transparent 60%),
-        linear-gradient(160deg, #0e0c07 0%, #0A0A0A 40%, #080806 100%);
-    }
-    .hero-lines {
-      position: absolute; inset: 0;
-      background-image:
-        repeating-linear-gradient(90deg, rgba(201,169,110,0.04) 0px, rgba(201,169,110,0.04) 1px, transparent 1px, transparent 80px),
-        repeating-linear-gradient(0deg, rgba(201,169,110,0.04) 0px, rgba(201,169,110,0.04) 1px, transparent 1px, transparent 80px);
-    }
-    .hero-content {
-      position: relative; z-index: 2;
-      text-align: center;
-      padding: 0 2rem;
-      animation: heroFade 1.4s ease both;
-    }
-    @keyframes heroFade {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .hero-eyebrow {
-      font-size: 0.7rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 2rem;
-      animation: heroFade 1.4s 0.2s ease both;
-    }
-    .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(5rem, 14vw, 11rem);
-      font-weight: 300;
-      line-height: 0.88;
-      letter-spacing: 0.04em;
-      color: var(--off-white);
-      animation: heroFade 1.4s 0.35s ease both;
-    }
-    .hero-title em {
-      font-style: italic;
-      color: var(--gold);
-    }
-    .hero-subtitle {
-      margin-top: 2.5rem;
-      font-size: 0.82rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      animation: heroFade 1.4s 0.5s ease both;
-    }
-    .hero-cta {
-      margin-top: 3.5rem;
-      display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;
-      animation: heroFade 1.4s 0.65s ease both;
-    }
-    .btn-primary {
-      background: var(--gold); color: var(--black);
-      padding: 1rem 2.8rem;
-      text-decoration: none;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      transition: background 0.25s, transform 0.2s;
-      display: inline-block;
-    }
-    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
-    .btn-outline {
-      border: 1px solid var(--border);
-      color: var(--off-white);
-      padding: 1rem 2.8rem;
-      text-decoration: none;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      transition: border-color 0.25s, color 0.25s;
-      display: inline-block;
-    }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-    .hero-scroll {
-      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
-      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted);
-      animation: heroFade 1.4s 1s ease both;
-    }
-    .scroll-line {
-      width: 1px; height: 48px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-    @keyframes scrollPulse {
-      0%,100% { opacity: 0.4; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(1.2); }
-    }
-
-    /* ── SECTION COMMONS ── */
-    section { padding: 7rem 5vw; }
-    .section-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.2rem;
-    }
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.6rem, 5vw, 4rem);
-      font-weight: 300;
-      line-height: 1.1;
-      color: var(--off-white);
-    }
-    .section-title em { font-style: italic; color: var(--gold); }
-    .divider {
-      width: 60px; height: 1px;
-      background: var(--gold);
-      margin: 2rem 0;
-    }
-
-    /* ── ABOUT ── */
-    #about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: center;
-      background: var(--deep);
-    }
-    .about-visual {
-      position: relative;
-      aspect-ratio: 4/5;
-    }
-    .about-img-placeholder {
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, #1a1608 0%, #2a2010 50%, #1a1608 100%);
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-      position: relative;
-    }
-    .about-img-placeholder::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 60% 60% at 50% 30%, rgba(201,169,110,0.12) 0%, transparent 70%);
-    }
-    .about-img-inner {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 8rem;
-      color: rgba(201,169,110,0.15);
-      font-weight: 300;
-      letter-spacing: -0.05em;
-      z-index: 1;
-    }
-    .about-frame {
-      position: absolute;
-      top: -1.5rem; left: -1.5rem;
-      width: calc(100% - 3rem); height: calc(100% - 3rem);
-      border: 1px solid var(--border);
-      pointer-events: none;
-    }
-    .about-text p {
-      color: var(--muted);
-      line-height: 1.9;
-      font-size: 0.95rem;
-      margin-bottom: 1.4rem;
-    }
-    .about-stats {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 2rem; margin-top: 3rem;
-      padding-top: 3rem;
-      border-top: 1px solid var(--border);
-    }
-    .stat-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.8rem;
-      font-weight: 300;
-      color: var(--gold);
-      line-height: 1;
-    }
-    .stat-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 0.4rem;
-    }
-
-    /* ── MENU ── */
-    #menu { background: var(--black); }
-    .menu-header { text-align: center; margin-bottom: 4rem; }
-    .menu-header .divider { margin: 2rem auto; }
-    .menu-tabs {
-      display: flex; justify-content: center; gap: 0;
-      margin-bottom: 3.5rem;
-      border: 1px solid var(--border);
-      width: fit-content;
-      margin-left: auto; margin-right: auto;
-    }
-    .tab-btn {
-      padding: 0.8rem 2rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      background: none;
-      border: none;
-      color: var(--muted);
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      font-family: 'Tenor Sans', sans-serif;
-      border-right: 1px solid var(--border);
-    }
-    .tab-btn:last-child { border-right: none; }
-    .tab-btn.active { background: var(--gold); color: var(--black); }
-    .tab-btn:hover:not(.active) { color: var(--gold); }
-    .menu-panel { display: none; }
-    .menu-panel.active { display: block; }
-    .menu-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .menu-item {
-      padding: 2rem 2.5rem;
-      border-bottom: 1px solid var(--border);
-      border-right: 1px solid var(--border);
-      transition: background 0.2s;
-    }
-    .menu-item:nth-child(even) { border-right: none; }
-    .menu-item:hover { background: rgba(201,169,110,0.03); }
-    .menu-item-top {
-      display: flex; justify-content: space-between; align-items: baseline;
-      margin-bottom: 0.5rem;
-    }
-    .menu-item-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem;
-      font-weight: 400;
-      color: var(--off-white);
-    }
-    .menu-item-price {
-      font-size: 0.8rem;
-      color: var(--gold);
-      letter-spacing: 0.1em;
-    }
-    .menu-item-desc {
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-    .menu-note {
-      text-align: center;
-      margin-top: 3rem;
-      font-size: 0.75rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      font-style: italic;
-    }
-
-    /* ── GALLERY ── */
-    #gallery {
-      background: var(--deep);
-      padding-bottom: 5rem;
-    }
-    .gallery-header { text-align: center; margin-bottom: 3.5rem; }
-    .gallery-header .divider { margin: 2rem auto; }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: auto;
-      gap: 0.6rem;
-    }
-    .gallery-cell {
-      aspect-ratio: 1;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-    }
-    .gallery-cell:first-child { grid-column: span 2; aspect-ratio: unset; }
-    .gallery-inner {
-      width: 100%; height: 100%;
-      min-height: 220px;
-      background: linear-gradient(135deg, #1a1608, #2e2410);
-      display: flex; align-items: center; justify-content: center;
-      transition: transform 0.5s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .gallery-inner::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: rgba(0,0,0,0.4);
-      transition: opacity 0.3s;
-    }
-    .gallery-cell:hover .gallery-inner { transform: scale(1.04); }
-    .gallery-cell:hover .gallery-inner::after { opacity: 0.2; }
-    .gallery-icon {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3rem, 6vw, 5rem);
-      color: rgba(201,169,110,0.2);
-      z-index: 1;
-    }
-    .gallery-label {
-      position: absolute; bottom: 1rem; left: 1rem;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(245,240,232,0.7);
-      z-index: 2;
-    }
-
-    /* ── RESERVATIONS ── */
-    #reservations {
-      background: var(--black);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: start;
-    }
-    .res-info {}
-    .res-info p {
-      color: var(--muted);
-      line-height: 1.9;
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-    }
-    .res-details { margin-top: 2.5rem; }
-    .res-detail-item {
-      display: flex; gap: 1rem;
-      padding: 1.2rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .res-detail-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      min-width: 100px;
-    }
-    .res-detail-value {
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    .res-form { display: flex; flex-direction: column; gap: 1.2rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-    .form-group label {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      color: var(--off-white);
-      padding: 0.85rem 1rem;
-      font-family: 'Tenor Sans', sans-serif;
-      font-size: 0.85rem;
-      outline: none;
-      transition: border-color 0.2s;
-      -webkit-appearance: none;
-    }
-    .form-group select { cursor: pointer; }
-    .form-group select option { background: #111; }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus { border-color: var(--gold); }
-    .form-group textarea { resize: none; height: 100px; }
-    .form-submit {
-      background: var(--gold); color: var(--black);
-      border: none;
-      padding: 1rem 2rem;
-      font-family: 'Tenor Sans', sans-serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.25s, transform 0.2s;
-      margin-top: 0.5rem;
-    }
-    .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
-    .form-success {
-      display: none;
-      background: rgba(201,169,110,0.08);
-      border: 1px solid var(--border);
-      padding: 1.5rem;
-      text-align: center;
-      color: var(--gold);
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--deep);
-      padding: 4rem 5vw 2.5rem;
-      border-top: 1px solid var(--border);
-    }
-    .footer-top {
-      display: grid; grid-template-columns: 1fr 1fr 1fr;
-      gap: 3rem; margin-bottom: 3rem;
-      padding-bottom: 3rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .footer-brand {}
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem; font-weight: 300;
-      letter-spacing: 0.25em; color: var(--gold);
-      margin-bottom: 0.8rem;
-    }
-    .footer-tagline {
-      font-size: 0.75rem; color: var(--muted);
-      letter-spacing: 0.12em; line-height: 1.8;
-    }
-    .footer-col h4 {
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.2rem;
-    }
-    .footer-col p, .footer-col a {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 2;
-      text-decoration: none;
-      display: block;
-      transition: color 0.2s;
-    }
-    .footer-col a:hover { color: var(--gold); }
-    .footer-bottom {
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 1rem;
-    }
-    .footer-copy {
-      font-size: 0.7rem; color: var(--muted);
-      letter-spacing: 0.1em;
-    }
-    .footer-social { display: flex; gap: 1.5rem; }
-    .footer-social a {
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer-social a:hover { color: var(--gold); }
-
-    /* ── FADE IN ON SCROLL ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      #about { grid-template-columns: 1fr; }
-      .about-visual { max-width: 400px; }
-      .menu-grid { grid-template-columns: 1fr; }
-      .menu-item { border-right: none; }
-      .menu-item:nth-child(even) { border-right: none; }
-      #reservations { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; }
-      .gallery-cell:first-child { grid-column: span 2; }
-      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
-      .nav-links, .nav-reserve { display: none; }
-      .hamburger { display: flex; }
-    }
-    @media (max-width: 560px) {
-      section { padding: 5rem 6vw; }
-      .gallery-grid { grid-template-columns: 1fr; }
-      .gallery-cell:first-child { grid-column: span 1; }
-      .menu-tabs { flex-direction: column; width: 100%; }
-      .tab-btn { border-right: none; border-bottom: 1px solid var(--border); }
-      .tab-btn:last-child { border-bottom: none; }
-      .about-stats { grid-template-columns: 1fr 1fr; }
-    }
-
-    /* Mobile nav drawer */
-    .mobile-nav {
-      display: none;
-      position: fixed; inset: 0; z-index: 200;
-      background: rgba(10,10,10,0.98);
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2.5rem;
-    }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem; font-weight: 300;
-      letter-spacing: 0.1em;
-      color: var(--off-white);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .mobile-nav a:hover { color: var(--gold); }
-    .mobile-close {
-      position: absolute; top: 2rem; right: 5vw;
-      font-size: 2rem; color: var(--muted);
-      background: none; border: none; cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VÖRN — Men's Luxury Fashion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0C0C0B;--bg2:#111110;--bg3:#161614;--surface:#1C1C1A;
+  --white:#F4F2EE;--off:#B8B4AC;--muted:#6A6860;
+  --border:#2A2A28;--border2:rgba(255,255,255,0.07);
+  --accent:#C8A96A;--accent2:#8B6B35;--red:#B84040;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+#cur{position:fixed;width:8px;height:8px;background:var(--white);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s,background .2s,border-radius .2s}
+#cur-ring{position:fixed;width:40px;height:40px;border:1px solid rgba(200,169,106,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .06s,top .06s,width .2s,height .2s}
+#cur.h{width:14px;height:14px;background:var(--accent);border-radius:2px}
+#cur-ring.h{width:56px;height:56px;border-color:var(--accent)}
+.topbar{background:var(--accent2);padding:.5rem;text-align:center;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--white)}
+nav{position:sticky;top:0;z-index:300;background:rgba(12,12,11,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5vw;display:flex;align-items:stretch;justify-content:space-between;height:64px}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.12em;color:var(--white);text-decoration:none;display:flex;align-items:center;transition:color .2s}
+.nav-logo span{color:var(--accent)}
+.nav-logo:hover{color:var(--accent)}
+.nav-links{display:flex;align-items:stretch;list-style:none}
+.nav-links a{display:flex;align-items:center;padding:0 1.3rem;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;position:relative;font-weight:400}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:1.3rem;right:1.3rem;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .25s}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-right{display:flex;align-items:center;gap:.5rem}
+.nav-btn{background:none;border:none;cursor:none;color:var(--muted);padding:.6rem;transition:color .2s;display:flex;align-items:center}
+.nav-btn:hover{color:var(--white)}
+.c-wrap{position:relative}
+.c-badge{position:absolute;top:4px;right:4px;background:var(--accent);color:var(--bg);width:14px;height:14px;border-radius:50%;font-size:.5rem;display:none;align-items:center;justify-content:center;font-weight:700}
+.ham{display:none;flex-direction:column;gap:4px;cursor:none;padding:.6rem;background:none;border:none}
+.ham span{width:22px;height:1px;background:var(--white);display:block}
+/* SEARCH */
+.srch-ov{position:fixed;inset:0;background:rgba(12,12,11,.97);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.srch-ov.open{display:flex;animation:fIn .2s}
+.srch-close{position:absolute;top:2rem;right:5vw;background:none;border:none;cursor:none;color:var(--muted);font-size:1.4rem;transition:color .2s}
+.srch-close:hover{color:var(--white)}
+.srch-label{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.25em;color:var(--muted)}
+.srch-field{display:flex;align-items:center;gap:1rem;border-bottom:1px solid var(--border);padding:1rem 0;width:min(680px,80vw)}
+.srch-field input{flex:1;background:none;border:none;font-family:'EB Garamond',serif;font-size:clamp(2rem,4vw,3rem);color:var(--white);outline:none}
+.srch-field input::placeholder{color:var(--muted)}
+.srch-hint{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.hero-l{background:var(--bg2);display:flex;flex-direction:column;justify-content:flex-end;padding:6vw 5vw;position:relative;overflow:hidden}
+.bg-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(10rem,22vw,20rem);line-height:.85;color:rgba(255,255,255,.02);position:absolute;top:50%;left:-2vw;transform:translateY(-55%);pointer-events:none;user-select:none}
+.h-eye{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;animation:sUp .8s .1s both}
+.h-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,9vw,9rem);line-height:.92;letter-spacing:.03em;margin-bottom:2.5rem;animation:sUp .8s .2s both}
+.h-title .ac{color:var(--accent)}
+.h-title .it{font-family:'EB Garamond',serif;font-style:italic;font-size:.75em}
+.h-body{font-size:.85rem;line-height:1.9;color:var(--off);max-width:360px;margin-bottom:3rem;animation:sUp .8s .3s both}
+.h-cta{display:flex;gap:1rem;flex-wrap:wrap;animation:sUp .8s .4s both}
+.btn-fill{background:var(--white);color:var(--bg);padding:.85rem 2.4rem;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;border:none;cursor:none;text-decoration:none;display:inline-flex;align-items:center;gap:.6rem;transition:background .2s,transform .2s;font-family:'DM Sans',sans-serif;font-weight:400}
+.btn-fill:hover{background:var(--accent);transform:translateY(-2px)}
+.btn-line{background:none;color:var(--white);padding:.85rem 2.4rem;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;border:1px solid var(--border);cursor:none;text-decoration:none;display:inline-flex;align-items:center;gap:.6rem;transition:border-color .2s,color .2s,transform .2s;font-family:'DM Sans',sans-serif;font-weight:400}
+.btn-line:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.h-stats{display:flex;gap:2.5rem;margin-top:4rem;padding-top:2.5rem;border-top:1px solid var(--border);animation:sUp .8s .5s both}
+.sv{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:.05em;color:var(--accent);display:block}
+.sl{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
+.hero-r{position:relative;overflow:hidden;background:var(--bg3)}
+.hero-r-bg{position:absolute;inset:0;background:linear-gradient(160deg,#1a1a18,#0d0d0b,#141412)}
+.hero-vw{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.hero-shape{width:55%;aspect-ratio:2/3;position:relative;animation:hRev 1s .6s both}
+@keyframes hRev{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+.hero-shape-i{width:100%;height:100%;background:linear-gradient(170deg,#2a2820,#1a1812,#22201a);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.hero-shape-i::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(200,169,106,.08),transparent)}
+.h-glyph{font-family:'Bebas Neue',sans-serif;font-size:9rem;color:rgba(200,169,106,.05);user-select:none}
+.hero-tag{position:absolute;bottom:2rem;right:2rem;background:var(--surface);border:1px solid var(--border);padding:1rem 1.4rem;animation:sUp .8s .9s both}
+.hero-tag-l{font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+.hero-tag-v{font-family:'EB Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--accent)}
+.hero-line{position:absolute;top:50%;left:0;width:100%;height:1px;background:linear-gradient(to right,transparent,rgba(200,169,106,.1),transparent);pointer-events:none}
+/* TICKER */
+.ticker{background:var(--accent2);overflow:hidden;padding:.7rem 0;white-space:nowrap}
+.ticker-t{display:inline-block;animation:tick 30s linear infinite}
+.ticker-t span{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(244,242,238,.75);padding:0 2.5rem}
+.ticker-t .sep{color:rgba(244,242,238,.3);padding:0 .5rem}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* SECTIONS */
+.s-lbl{font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+.s-ttl{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5vw,5rem);letter-spacing:.05em;line-height:.95}
+.s-ttl .em{font-family:'EB Garamond',serif;font-style:italic;font-size:.8em;letter-spacing:.02em}
+.s-div{width:40px;height:2px;background:var(--accent);margin:1.8rem 0}
+/* CATEGORIES */
+#categories{padding:6rem 5vw;background:var(--bg2)}
+.cat-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem}
+.lnk{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s}
+.lnk:hover{color:var(--accent)}
+.cat-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:3px}
+.cc{position:relative;overflow:hidden;cursor:none}
+.cc.tall{grid-row:span 2}
+.cc-in{width:100%;height:100%;min-height:280px;display:flex;align-items:flex-end;position:relative;transition:transform .6s ease}
+.cc:hover .cc-in{transform:scale(1.03)}
+.cc-gl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,9vw,9rem);color:rgba(255,255,255,.04);user-select:none;transition:color .4s}
+.cc:hover .cc-gl{color:rgba(200,169,106,.07)}
+.cc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,12,11,.85) 0%,transparent 55%);transition:opacity .3s}
+.cc:hover .cc-ov{opacity:.75}
+.cc-info{position:relative;z-index:2;padding:1.8rem 1.6rem;width:100%}
+.cc-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.08em;color:var(--white);margin-bottom:.2rem}
+.cc-sub{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,242,238,.45);transition:color .3s}
+.cc:hover .cc-sub{color:var(--accent)}
+/* PRODUCTS */
+#products{padding:5rem 5vw 7rem;background:var(--bg)}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1.5rem}
+.fr{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.fb{background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;padding:.4rem 1rem;cursor:none;transition:all .2s;font-weight:300}
+.fb.active,.fb:hover{background:var(--white);color:var(--bg);border-color:var(--white)}
+.sw{display:flex;align-items:center;gap:.8rem}
+.sw-lbl{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.ss{background:var(--surface);border:1px solid var(--border);color:var(--white);font-family:'DM Sans',sans-serif;font-size:.62rem;padding:.4rem .8rem;cursor:none;outline:none;font-weight:300}
+.ss option{background:var(--bg2)}
+.pg{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5rem 1.5rem}
+.pc{cursor:none;position:relative}
+.pi{aspect-ratio:3/4;background:var(--surface);position:relative;overflow:hidden;margin-bottom:1.1rem}
+.pp{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:5rem;color:rgba(255,255,255,.05);transition:transform .5s,color .3s}
+.pc:hover .pp{transform:scale(1.05);color:rgba(200,169,106,.08)}
+.pbg{position:absolute;top:.8rem;left:.8rem;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .65rem;font-weight:400;z-index:2}
+.pbg.new{background:var(--white);color:var(--bg)}
+.pbg.sale{background:var(--red);color:var(--white)}
+.pbg.exc{background:var(--accent2);color:var(--white)}
+.pha{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;gap:.5rem;opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s;z-index:3}
+.pc:hover .pha{opacity:1;transform:translateY(0)}
+.padd{background:var(--white);color:var(--bg);border:none;padding:.75rem;font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;cursor:none;width:100%;transition:background .2s;font-weight:400}
+.padd:hover{background:var(--accent)}
+.pqr{display:flex;gap:.5rem}
+.pqb{flex:0 0 42px;height:38px;background:rgba(28,28,26,.85);backdrop-filter:blur(8px);border:1px solid var(--border);cursor:none;display:flex;align-items:center;justify-content:center;color:var(--off);transition:background .2s,color .2s;font-size:.7rem;letter-spacing:.1em;font-family:'DM Sans',sans-serif}
+.pqb:hover{background:var(--surface);color:var(--white)}
+.pqb.wished svg{fill:var(--accent);stroke:var(--accent)}
+.pb{font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:.3rem}
+.pn{font-family:'EB Garamond',serif;font-size:1.05rem;color:var(--white);margin-bottom:.4rem;line-height:1.3}
+.ppr{display:flex;align-items:baseline;gap:.6rem;margin-bottom:.4rem}
+.pp2{font-size:.82rem;color:var(--white);letter-spacing:.04em;font-weight:300}
+.po{font-size:.72rem;color:var(--muted);text-decoration:line-through}
+.pst{display:flex;gap:2px}
+.st{width:9px;height:9px}
+.st.f{fill:var(--accent)}
+.st.e{fill:none;stroke:var(--muted);stroke-width:1.5}
+/* MODAL */
+.mo{position:fixed;inset:0;background:rgba(8,8,8,.8);z-index:600;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.mo.open{display:flex;animation:fIn .3s}
+.mb{background:var(--bg2);width:92vw;max-width:940px;max-height:92vh;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;position:relative;border:1px solid var(--border);animation:sUp .35s both}
+.mc{position:absolute;top:1.2rem;right:1.2rem;background:var(--surface);border:none;cursor:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:var(--muted);z-index:10;transition:color .2s,background .2s;font-size:1rem}
+.mc:hover{background:var(--border);color:var(--white)}
+.mi{background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:9rem;color:rgba(255,255,255,.05);position:relative;min-height:400px}
+.mib{position:absolute;top:1rem;left:1rem;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .65rem;font-weight:400}
+.minfo{padding:2.5rem 2rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.3rem}
+.m-br{font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent)}
+.m-nm{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:.04em;line-height:.95;color:var(--white)}
+.m-pr{display:flex;align-items:baseline;gap:.8rem}
+.m-p{font-size:1.4rem;color:var(--white);font-weight:300}
+.m-op{font-size:1rem;color:var(--muted);text-decoration:line-through}
+.m-ds{font-size:.8rem;line-height:1.9;color:var(--off)}
+.m-lb{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;font-weight:400}
+.msz{display:flex;gap:.4rem;flex-wrap:wrap}
+.msb{width:46px;height:42px;background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.7rem;cursor:none;transition:all .2s;font-weight:300}
+.msb.a,.msb:hover{background:var(--white);color:var(--bg);border-color:var(--white)}
+.mcl{display:flex;gap:.6rem}
+.mcs{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:none;transition:outline .2s;outline:2px solid transparent;outline-offset:3px}
+.mcs.a{outline-color:var(--accent)}
+.madd{background:var(--white);color:var(--bg);border:none;width:100%;padding:1rem;font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;cursor:none;transition:background .25s;margin-top:auto;font-weight:400}
+.madd:hover,.madd.done{background:var(--accent)}
+/* EDITORIAL */
+#editorial{padding:6rem 5vw;background:var(--bg3);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.ev{aspect-ratio:4/3;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.ev::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 40% 40%,rgba(200,169,106,.07),transparent)}
+.ev-gl{font-family:'Bebas Neue',sans-serif;font-size:12rem;color:rgba(255,255,255,.03);user-select:none}
+.ev-corner{position:absolute;top:1rem;right:1rem;font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent2);padding:.4rem .8rem}
+.ef-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.ef{padding:1.2rem;border:1px solid var(--border);transition:border-color .25s}
+.ef:hover{border-color:var(--accent2)}
+.ef-icon{color:var(--accent);margin-bottom:.5rem}
+.ef-ttl{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--white);margin-bottom:.3rem;font-weight:400}
+.ef-desc{font-size:.72rem;color:var(--muted);line-height:1.7}
+/* LOOKBOOK */
+#lookbook{padding:5rem 5vw;background:var(--bg2)}
+.lb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:3rem}
+.lb{position:relative;overflow:hidden;cursor:none}
+.lb.tall{grid-row:span 2}
+.lb-in{width:100%;height:100%;min-height:240px;display:flex;align-items:center;justify-content:center;transition:transform .6s ease;position:relative}
+.lb:hover .lb-in{transform:scale(1.04)}
+.lb-ov{position:absolute;inset:0;background:rgba(12,12,11,.5);opacity:0;transition:opacity .3s;display:flex;align-items:center;justify-content:center}
+.lb:hover .lb-ov{opacity:1}
+.lb-txt{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.12em;color:var(--white);text-align:center}
+.lb-gl{font-family:'Bebas Neue',sans-serif;font-size:6rem;color:rgba(255,255,255,.04);user-select:none}
+/* CART */
+.c-ov{position:fixed;inset:0;background:rgba(8,8,8,.6);z-index:450;display:none}
+.c-ov.open{display:block}
+.c-drw{position:fixed;right:-500px;top:0;bottom:0;width:100%;max-width:480px;background:var(--bg2);z-index:460;border-left:1px solid var(--border);transition:right .4s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.c-drw.open{right:0}
+.c-hd{padding:1.6rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.c-ttl{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.08em}
+.c-cls{background:none;border:none;cursor:none;color:var(--muted);font-size:1.1rem;transition:color .2s}
+.c-cls:hover{color:var(--white)}
+.c-bd{flex:1;overflow-y:auto;padding:1.5rem 2rem}
+.c-emp{text-align:center;padding:4rem 1rem}
+.c-eg{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:var(--border);margin-bottom:1rem}
+.c-emp p{font-size:.78rem;color:var(--muted);line-height:1.8}
+.c-item{display:grid;grid-template-columns:72px 1fr;gap:1rem;padding:1.2rem 0;border-bottom:1px solid var(--border)}
+.c-ii{aspect-ratio:3/4;background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:rgba(255,255,255,.08)}
+.c-in{font-family:'EB Garamond',serif;font-size:.95rem;color:var(--white);margin-bottom:.2rem}
+.c-im{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem}
+.c-qr{display:flex;align-items:center;justify-content:space-between}
+.c-qty{display:flex;align-items:center;gap:.6rem}
+.cq{width:24px;height:24px;border:1px solid var(--border);background:none;color:var(--white);cursor:none;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:background .2s,border-color .2s}
+.cq:hover{background:var(--surface);border-color:var(--accent)}
+.c-qn{font-size:.78rem;min-width:16px;text-align:center}
+.c-ip{font-size:.82rem;color:var(--white)}
+.c-rm{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:none;font-family:'DM Sans',sans-serif;transition:color .2s;text-decoration:underline;display:block;margin-top:.5rem}
+.c-rm:hover{color:var(--white)}
+.c-ft{padding:1.5rem 2rem;border-top:1px solid var(--border)}
+.c-row{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-bottom:.5rem}
+.c-row.tot{font-size:.9rem;color:var(--white);border-top:1px solid var(--border);padding-top:.8rem;margin-top:.6rem}
+.c-co{background:var(--white);color:var(--bg);border:none;width:100%;padding:1rem;font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;cursor:none;transition:background .25s;margin-top:1rem;font-weight:400}
+.c-co:hover{background:var(--accent)}
+/* NEWSLETTER */
+#newsletter{padding:5rem 5vw;background:var(--bg);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;border-top:1px solid var(--border)}
+.nl-l p{font-size:.82rem;line-height:1.9;color:var(--off);max-width:380px;margin-top:1rem}
+.nl-form{display:flex;border:1px solid var(--border);margin-top:2rem}
+.nl-inp{flex:1;background:none;border:none;font-family:'DM Sans',sans-serif;font-size:.8rem;color:var(--white);padding:.95rem 1.2rem;outline:none}
+.nl-inp::placeholder{color:var(--muted)}
+.nl-sub{background:var(--accent2);color:var(--white);border:none;padding:.95rem 1.8rem;font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;cursor:none;transition:background .2s;white-space:nowrap;font-weight:400}
+.nl-sub:hover{background:var(--accent)}
+.nl-r{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.nlf{padding:1.3rem;border:1px solid var(--border);transition:border-color .25s}
+.nlf:hover{border-color:var(--accent2)}
+.nlf-t{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--white);margin-bottom:.35rem;font-weight:400}
+.nlf-d{font-size:.72rem;color:var(--muted);line-height:1.7}
+footer{background:var(--bg3);border-top:1px solid var(--border);padding:5rem 5vw 2rem}
+.ft{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:3rem;margin-bottom:4rem;padding-bottom:4rem;border-bottom:1px solid var(--border)}
+.fl{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.12em;color:var(--white);margin-bottom:.8rem;display:block;text-decoration:none}
+.fl span{color:var(--accent)}
+.fa{font-size:.75rem;color:var(--muted);line-height:1.9;max-width:220px}
+.fc h5{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1.4rem;font-weight:400}
+.fc a{display:block;font-size:.75rem;color:var(--muted);text-decoration:none;line-height:2.3;transition:color .2s}
+.fc a:hover{color:var(--white)}
+.fb2{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.fc2{font-size:.6rem;color:var(--muted);letter-spacing:.1em}
+.fs{display:flex;gap:1.5rem}
+.fs a{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.fs a:hover{color:var(--accent)}
+.toast{position:fixed;bottom:2.5rem;left:50%;transform:translateX(-50%) translateY(60px);background:var(--white);color:var(--bg);padding:.8rem 2rem;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;z-index:700;transition:transform .3s cubic-bezier(.4,0,.2,1);white-space:nowrap;font-weight:400}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.rv{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
+.mob-nav{position:fixed;inset:0;background:var(--bg);z-index:500;display:none;flex-direction:column;justify-content:center;align-items:center;gap:2rem}
+.mob-nav.open{display:flex;animation:fIn .25s}
+.mob-cls{position:absolute;top:1.5rem;right:5vw;background:none;border:none;cursor:none;color:var(--muted);font-size:1.4rem}
+.mob-nav a{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.1em;color:var(--white);text-decoration:none;transition:color .2s}
+.mob-nav a:hover{color:var(--accent)}
+@keyframes fIn{from{opacity:0}to{opacity:1}}
+@keyframes sUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media(max-width:1100px){.pg{grid-template-columns:repeat(3,1fr)}.ft{grid-template-columns:1fr 1fr}}
+@media(max-width:860px){#hero{grid-template-columns:1fr}.hero-r{min-height:55vw}#editorial{grid-template-columns:1fr}#newsletter{grid-template-columns:1fr;gap:3rem}.cat-grid{grid-template-columns:1fr 1fr}.cc.tall{grid-row:span 1}.mb{grid-template-columns:1fr;max-height:95vh;overflow-y:auto}.mi{min-height:280px}}
+@media(max-width:700px){.nav-links{display:none}.ham{display:flex}body{cursor:auto}#cur,#cur-ring{display:none}.pg{grid-template-columns:repeat(2,1fr);gap:1.2rem .8rem}.lb-grid{grid-template-columns:1fr 1fr}.lb.tall{grid-row:span 1}.ft{grid-template-columns:1fr}.nl-r{grid-template-columns:1fr}}
+@media(max-width:480px){section{padding:4rem 5vw}.h-stats{flex-wrap:wrap;gap:1.5rem}.cat-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-
-<!-- NAV -->
-<nav id="navbar">
-  <a class="nav-logo" href="#">Aurum</a>
+<div id="cur"></div><div id="cur-ring"></div>
+<div class="topbar">Free shipping on orders over ₹6,000 &nbsp;·&nbsp; AW25 Collection — Now Live</div>
+<nav>
+  <a class="nav-logo" href="#">VÖ<span>RN</span></a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#menu">Menu</a></li>
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#reservations">Reservations</a></li>
+    <li><a href="#categories">Collections</a></li>
+    <li><a href="#products">Shop</a></li>
+    <li><a href="#lookbook">Lookbook</a></li>
+    <li><a href="#editorial">Craft</a></li>
   </ul>
-  <a class="nav-reserve" href="#reservations">Reserve a Table</a>
-  <div class="hamburger" id="hamburger">
-    <span></span><span></span><span></span>
+  <div class="nav-right">
+    <button class="nav-btn" id="searchBtn"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m18 18 3.5 3.5"/></svg></button>
+    <div class="c-wrap"><button class="nav-btn" id="cartBtn"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></button><span class="c-badge" id="cBadge">0</span></div>
+    <button class="ham" id="hamBtn"><span></span><span></span><span></span></button>
   </div>
 </nav>
-
-<!-- MOBILE NAV -->
-<div class="mobile-nav" id="mobileNav">
-  <button class="mobile-close" id="mobileClose">✕</button>
-  <a href="#about" onclick="closeMobile()">About</a>
-  <a href="#menu" onclick="closeMobile()">Menu</a>
-  <a href="#gallery" onclick="closeMobile()">Gallery</a>
-  <a href="#reservations" onclick="closeMobile()">Reserve</a>
+<div class="mob-nav" id="mobNav">
+  <button class="mob-cls" id="mobCls">✕</button>
+  <a href="#categories" onclick="cMob()">Collections</a>
+  <a href="#products" onclick="cMob()">Shop</a>
+  <a href="#lookbook" onclick="cMob()">Lookbook</a>
+  <a href="#editorial" onclick="cMob()">Craft</a>
 </div>
-
-<!-- HERO -->
+<div class="srch-ov" id="srchOv">
+  <button class="srch-close" onclick="cSrch()">✕</button>
+  <div class="srch-label">SEARCH</div>
+  <div class="srch-field">
+    <svg width="20" height="20" fill="none" stroke="var(--muted)" stroke-width="1.4" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m18 18 3.5 3.5"/></svg>
+    <input type="text" id="srchInp" placeholder="Jackets, trousers, shirts…"/>
+  </div>
+  <div class="srch-hint" id="srchHint">Type to search the collection</div>
+</div>
 <section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-lines"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">Est. 2018 &nbsp;·&nbsp; Mumbai, India</p>
-    <h1 class="hero-title">Au<em>rum</em></h1>
-    <p class="hero-subtitle">Where Cuisine Becomes Ceremony</p>
-    <div class="hero-cta">
-      <a href="#reservations" class="btn-primary">Reserve a Table</a>
-      <a href="#menu" class="btn-outline">View Menu</a>
+  <div class="hero-l">
+    <div class="bg-num">I</div>
+    <div class="h-eye">Autumn / Winter 2025</div>
+    <h1 class="h-title">DRESS<br><span class="ac it">with</span><br>INTENT</h1>
+    <p class="h-body">VÖRN is a men's luxury house built on the belief that clothing is identity. Each garment is designed to outlast fashion — constructed with intention, worn with conviction.</p>
+    <div class="h-cta">
+      <a href="#products" class="btn-fill">Shop the Collection →</a>
+      <a href="#lookbook" class="btn-line">View Lookbook</a>
+    </div>
+    <div class="h-stats">
+      <div><span class="sv">AW25</span><div class="sl">New Collection</div></div>
+      <div><span class="sv">120+</span><div class="sl">Pieces Available</div></div>
+      <div><span class="sv">12</span><div class="sl">Master Artisans</div></div>
     </div>
   </div>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span>Scroll</span>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-visual reveal">
-    <div class="about-img-placeholder">
-      <div class="about-img-inner">A</div>
-    </div>
-    <div class="about-frame"></div>
-  </div>
-  <div class="about-text reveal">
-    <p class="section-label">Our Story</p>
-    <h2 class="section-title">A pursuit of<br><em>perfection</em> on<br>every plate</h2>
-    <div class="divider"></div>
-    <p>Aurum was born from a singular obsession — that a meal should move you the way great art does. Founded by Chef Aryan Mehta, we blend the forgotten flavours of subcontinental heritage with the precision of contemporary French technique.</p>
-    <p>Every ingredient is sourced with intention. Every plate is a composition. Every evening, an experience that begins the moment you walk through our doors.</p>
-    <div class="about-stats">
-      <div>
-        <div class="stat-num">7+</div>
-        <div class="stat-label">Years of Excellence</div>
-      </div>
-      <div>
-        <div class="stat-num">2</div>
-        <div class="stat-label">Michelin Stars</div>
-      </div>
-      <div>
-        <div class="stat-num">40</div>
-        <div class="stat-label">Seats Only</div>
-      </div>
+  <div class="hero-r">
+    <div class="hero-r-bg"></div>
+    <div class="hero-vw">
+      <div class="hero-shape"><div class="hero-shape-i"><div class="h-glyph">VN</div></div></div>
+      <div class="hero-tag"><div class="hero-tag-l">Featured Piece</div><div class="hero-tag-v">The Obsidian Coat</div></div>
+      <div class="hero-line"></div>
     </div>
   </div>
 </section>
-
-<!-- MENU -->
-<section id="menu">
-  <div class="menu-header reveal">
-    <p class="section-label">Culinary Offerings</p>
-    <h2 class="section-title">The <em>Menu</em></h2>
-    <div class="divider"></div>
-    <p style="color:var(--muted);font-size:0.85rem;max-width:480px;margin:0 auto;line-height:1.9;letter-spacing:0.04em;">Our menu changes with the season, celebrating the finest produce at its peak. Tasting menus are available for the full Aurum experience.</p>
+<div class="ticker"><div class="ticker-t">
+  <span>New Arrivals</span><span class="sep">◆</span><span>AW25 Collection</span><span class="sep">◆</span><span>Complimentary Shipping</span><span class="sep">◆</span><span>Tailored to Order</span><span class="sep">◆</span><span>Merino Essentials</span><span class="sep">◆</span><span>Japanese Denim</span><span class="sep">◆</span><span>Scottish Cashmere</span><span class="sep">◆</span>
+  <span>New Arrivals</span><span class="sep">◆</span><span>AW25 Collection</span><span class="sep">◆</span><span>Complimentary Shipping</span><span class="sep">◆</span><span>Tailored to Order</span><span class="sep">◆</span><span>Merino Essentials</span><span class="sep">◆</span><span>Japanese Denim</span><span class="sep">◆</span><span>Scottish Cashmere</span><span class="sep">◆</span>
+</div></div>
+<section id="categories">
+  <div class="cat-hdr rv">
+    <div><div class="s-lbl">Browse by Category</div><h2 class="s-ttl">THE <span class="em">Collections</span></h2></div>
+    <a href="#products" class="lnk">All Pieces →</a>
   </div>
-
-  <div class="menu-tabs reveal">
-    <button class="tab-btn active" onclick="switchTab('starters')">Starters</button>
-    <button class="tab-btn" onclick="switchTab('mains')">Mains</button>
-    <button class="tab-btn" onclick="switchTab('desserts')">Desserts</button>
-    <button class="tab-btn" onclick="switchTab('wines')">Wines</button>
-  </div>
-
-  <div id="starters" class="menu-panel active reveal">
-    <div class="menu-grid">
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Charred Leek Velouté</span>
-          <span class="menu-item-price">₹1,400</span>
-        </div>
-        <p class="menu-item-desc">Smoked crème fraîche, truffle oil, micro herbs, sourdough tuile</p>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Scallop & Saffron</span>
-          <span class="menu-item-price">₹2,200</span>
-        </div>
-        <p class="menu-item-desc">Pan-seared diver scallop, saffron beurre blanc, caramelised fennel</p>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Heritage Beetroot</span>
-          <span class="menu-item-price">₹1,100</span>
-        </div>
-        <p class="menu-item-desc">Goat cheese mousse, candied walnut, aged balsamic, edible flowers</p>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Foie Gras Torchon</span>
-          <span class="menu-item-price">₹2,800</span>
-        </div>
-        <p class="menu-item-desc">Fig & port chutney, brioche toast, Szechuan pepper caramel</p>
-      </div>
+  <div class="cat-grid rv">
+    <div class="cc tall" onclick="fBy('Outerwear',null)">
+      <div class="cc-in" style="background:linear-gradient(170deg,#1a1814,#0e0e0c,#1a1a16)"><div class="cc-gl">OW</div><div class="cc-ov"></div><div class="cc-info"><div class="cc-name">Outerwear</div><div class="cc-sub">32 Pieces · Coats, Blazers, Jackets</div></div></div>
     </div>
-  </div>
-
-  <div id="mains" class="menu-panel reveal">
-    <div class="menu-grid">
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">A5 Wagyu Striploin</span>
-          <span class="menu-item-price">₹8,500</span>
-        </div>
-        <p class="menu-item-desc">Japanese A5 wagyu, bone marrow butter, truffle jus, pomme purée</p>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Halibut en Croûte</span>
-          <span class="menu-item-price">₹4,200</span>
-        </div>
-        <p class="menu-item-desc">Wild halibut in herb pastry, lobster bisque, sea vegetables</p>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Duck à l'Orange</span>
-          <span class="menu-item-price">₹3,800</span>
-        </div>
-        <p class="menu-item-desc">Slow-roasted duck breast, Nagpur orange glaze, braised lentils, crispy skin</p>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Wild Mushroom Risotto</span>
-          <span class="menu-item-price">₹2,600</span>
-        </div>
-        <p class="menu-item-desc">Carnaroli rice, porcini & chanterelle, aged Parmigiano, white truffle shavings</p>
-      </div>
+    <div class="cc" onclick="fBy('Shirts',null)">
+      <div class="cc-in" style="background:linear-gradient(160deg,#22201a,#181610)"><div class="cc-gl">SH</div><div class="cc-ov"></div><div class="cc-info"><div class="cc-name">Shirts</div><div class="cc-sub">24 Pieces · Linen, Poplin, Oxford</div></div></div>
     </div>
-  </div>
-
-  <div id="desserts" class="menu-panel reveal">
-    <div class="menu-grid">
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Valrhona Soufflé</span>
-          <span class="menu-item-price">₹1,600</span>
-        </div>
-        <p class="menu-item-desc">70% dark chocolate soufflé, vanilla bean ice cream, sea salt caramel</p>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Jasmine Panna Cotta</span>
-          <span class="menu-item-price">₹1,200</span>
-        </div>
-        <p class="menu-item-desc">Jasmine tea set cream, lychee granita, rose petal tuile</p>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Mango Tarte Tatin</span>
-          <span class="menu-item-price">₹1,400</span>
-        </div>
-        <p class="menu-item-desc">Alphonso mango, caramelised puff pastry, cardamom Chantilly</p>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Cheese Trolley</span>
-          <span class="menu-item-price">₹1,800</span>
-        </div>
-        <p class="menu-item-desc">Seasonal selection of 5 artisan cheeses, accompaniments, house crackers</p>
-      </div>
+    <div class="cc" onclick="fBy('Knitwear',null)">
+      <div class="cc-in" style="background:linear-gradient(145deg,#1e1c16,#141210)"><div class="cc-gl">KN</div><div class="cc-ov"></div><div class="cc-info"><div class="cc-name">Knitwear</div><div class="cc-sub">18 Pieces · Merino, Cashmere</div></div></div>
     </div>
-  </div>
-
-  <div id="wines" class="menu-panel reveal">
-    <div class="menu-grid">
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Puligny-Montrachet</span>
-          <span class="menu-item-price">₹12,000</span>
-        </div>
-        <p class="menu-item-desc">Louis Jadot · Burgundy, France · 2019 — Crisp, mineral, stone fruit</p>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Château Margaux</span>
-          <span class="menu-item-price">₹38,000</span>
-        </div>
-        <p class="menu-item-desc">Premier Grand Cru · Bordeaux, France · 2015 — Full, complex, violet notes</p>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Sula Rasa Shiraz</span>
-          <span class="menu-item-price">₹4,500</span>
-        </div>
-        <p class="menu-item-desc">Sula Vineyards · Nashik, India · 2021 — Spiced plum, smooth tannins</p>
-      </div>
-      <div class="menu-item">
-        <div class="menu-item-top">
-          <span class="menu-item-name">Krug Grande Cuvée</span>
-          <span class="menu-item-price">₹28,000</span>
-        </div>
-        <p class="menu-item-desc">Champagne · France · NV — Toasty brioche, creamy mousse, citrus zest</p>
-      </div>
+    <div class="cc" onclick="fBy('Trousers',null)">
+      <div class="cc-in" style="background:linear-gradient(150deg,#2a2820,#1a1810)"><div class="cc-gl">TR</div><div class="cc-ov"></div><div class="cc-info"><div class="cc-name">Trousers</div><div class="cc-sub">20 Pieces · Wool, Denim, Chino</div></div></div>
     </div>
-  </div>
-
-  <p class="menu-note reveal">Prices are exclusive of taxes. Tasting menu available on request — ₹9,500 per person.</p>
-</section>
-
-<!-- GALLERY -->
-<section id="gallery">
-  <div class="gallery-header reveal">
-    <p class="section-label">Visual Journey</p>
-    <h2 class="section-title">The <em>Atmosphere</em></h2>
-    <div class="divider"></div>
-  </div>
-  <div class="gallery-grid reveal">
-    <div class="gallery-cell">
-      <div class="gallery-inner" style="background: linear-gradient(120deg,#1a1200,#3d2e00,#1a1200);">
-        <span class="gallery-icon">✦</span>
-        <span class="gallery-label">The Dining Room</span>
-      </div>
-    </div>
-    <div class="gallery-cell">
-      <div class="gallery-inner" style="background: linear-gradient(160deg,#0f0e08,#2a2015);">
-        <span class="gallery-icon">◈</span>
-        <span class="gallery-label">Signature Dishes</span>
-      </div>
-    </div>
-    <div class="gallery-cell">
-      <div class="gallery-inner" style="background: linear-gradient(120deg,#140f00,#281e00);">
-        <span class="gallery-icon">❧</span>
-        <span class="gallery-label">Wine Cellar</span>
-      </div>
-    </div>
-    <div class="gallery-cell">
-      <div class="gallery-inner" style="background: linear-gradient(180deg,#0e0e0a,#1e1c10);">
-        <span class="gallery-icon">⊛</span>
-        <span class="gallery-label">The Kitchen</span>
-      </div>
-    </div>
-    <div class="gallery-cell">
-      <div class="gallery-inner" style="background: linear-gradient(135deg,#0a0900,#201800);">
-        <span class="gallery-icon">✾</span>
-        <span class="gallery-label">Private Dining</span>
-      </div>
+    <div class="cc" onclick="fBy('Accessories',null)">
+      <div class="cc-in" style="background:linear-gradient(160deg,#1e1c1a,#141412)"><div class="cc-gl">AC</div><div class="cc-ov"></div><div class="cc-info"><div class="cc-name">Accessories</div><div class="cc-sub">28 Pieces · Scarves, Belts, Shoes</div></div></div>
     </div>
   </div>
 </section>
-
-<!-- RESERVATIONS -->
-<section id="reservations">
-  <div class="res-info reveal">
-    <p class="section-label">Book Your Evening</p>
-    <h2 class="section-title">Make a<br><em>Reservation</em></h2>
-    <div class="divider"></div>
-    <p>We accommodate up to 40 guests per sitting. Reservations are highly recommended and can be made up to 60 days in advance. For private dining enquiries or special occasions, please contact us directly.</p>
-    <div class="res-details">
-      <div class="res-detail-item">
-        <span class="res-detail-label">Location</span>
-        <span class="res-detail-value">Bandra Kurla Complex,<br>Mumbai, Maharashtra 400051</span>
+<section id="products">
+  <div class="ph rv">
+    <div><div class="s-lbl">The Edit</div><h2 class="s-ttl">FEATURED <span class="em">Pieces</span></h2></div>
+    <div style="display:flex;flex-direction:column;gap:1rem;align-items:flex-end">
+      <div class="fr" id="fRow">
+        <button class="fb active" onclick="fBy('All',this)">All</button>
+        <button class="fb" onclick="fBy('Outerwear',this)">Outerwear</button>
+        <button class="fb" onclick="fBy('Shirts',this)">Shirts</button>
+        <button class="fb" onclick="fBy('Knitwear',this)">Knitwear</button>
+        <button class="fb" onclick="fBy('Trousers',this)">Trousers</button>
+        <button class="fb" onclick="fBy('Accessories',this)">Accessories</button>
       </div>
-      <div class="res-detail-item">
-        <span class="res-detail-label">Hours</span>
-        <span class="res-detail-value">Tuesday – Sunday<br>Dinner: 7:00 PM – 11:00 PM</span>
-      </div>
-      <div class="res-detail-item">
-        <span class="res-detail-label">Contact</span>
-        <span class="res-detail-value">+91 22 4000 8000<br>hello@aurum.restaurant</span>
-      </div>
-      <div class="res-detail-item">
-        <span class="res-detail-label">Dress Code</span>
-        <span class="res-detail-value">Smart Elegant — we kindly request no casual wear</span>
-      </div>
+      <div class="sw"><span class="sw-lbl">Sort</span><select class="ss" id="sortSel" onchange="resort()"><option value="default">Featured</option><option value="asc">Price: Low → High</option><option value="desc">Price: High → Low</option><option value="az">Name A–Z</option></select></div>
     </div>
   </div>
-
-  <div class="reveal">
-    <form class="res-form" id="resForm" onsubmit="submitReservation(event)">
-      <div class="form-row">
-        <div class="form-group">
-          <label>First Name</label>
-          <input type="text" placeholder="Aryan" required />
-        </div>
-        <div class="form-group">
-          <label>Last Name</label>
-          <input type="text" placeholder="Mehta" required />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" placeholder="aryan@email.com" required />
-        </div>
-        <div class="form-group">
-          <label>Phone</label>
-          <input type="tel" placeholder="+91 98000 00000" required />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Date</label>
-          <input type="date" required />
-        </div>
-        <div class="form-group">
-          <label>Time</label>
-          <select required>
-            <option value="">Select time</option>
-            <option>7:00 PM</option>
-            <option>7:30 PM</option>
-            <option>8:00 PM</option>
-            <option>8:30 PM</option>
-            <option>9:00 PM</option>
-            <option>9:30 PM</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Number of Guests</label>
-        <select required>
-          <option value="">Select guests</option>
-          <option>1 Guest</option>
-          <option>2 Guests</option>
-          <option>3 Guests</option>
-          <option>4 Guests</option>
-          <option>5–6 Guests</option>
-          <option>7–8 Guests</option>
-          <option>Private Dining (9+)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Special Requests</label>
-        <textarea placeholder="Dietary requirements, allergies, occasion, seating preferences…"></textarea>
-      </div>
-      <button type="submit" class="form-submit">Confirm Reservation</button>
-    </form>
-    <div class="form-success" id="formSuccess">
-      ✦ &nbsp; Thank you. Your reservation request has been received. We will confirm within 24 hours.
+  <div class="pg" id="prodGrid"></div>
+</section>
+<section id="editorial">
+  <div class="ev rv"><div class="ev-gl">VN</div><div class="ev-corner">AW 2025</div></div>
+  <div class="rv d2">
+    <div class="s-lbl">The Philosophy</div>
+    <h2 class="s-ttl">BUILT TO <span class="em">Endure</span></h2>
+    <div class="s-div"></div>
+    <p style="font-size:.85rem;line-height:1.95;color:var(--off);margin-bottom:1.2rem">At VÖRN, we reject disposable fashion. Every piece is conceived in our London studio and executed by master artisans across Italy, Japan, and Scotland.</p>
+    <p style="font-size:.85rem;line-height:1.95;color:var(--off)">We source only heritage fabrics — Super 180s wool from Zegna mills, 18.5 micron merino from Biella, and selvedge denim from Kojima, Japan.</p>
+    <div class="ef-grid">
+      <div class="ef"><div class="ef-icon">◈</div><div class="ef-ttl">Heritage Fabrics</div><div class="ef-desc">Century-old mills across Europe and Japan</div></div>
+      <div class="ef"><div class="ef-icon">✦</div><div class="ef-ttl">Hand Finished</div><div class="ef-desc">Every garment finished by our master tailors</div></div>
+      <div class="ef"><div class="ef-icon">◉</div><div class="ef-ttl">Made to Last</div><div class="ef-desc">Lifetime repair guarantee on all core pieces</div></div>
+      <div class="ef"><div class="ef-icon">⊛</div><div class="ef-ttl">Zero Waste</div><div class="ef-desc">All offcuts recycled or donated to artisan schools</div></div>
     </div>
   </div>
 </section>
-
-<!-- FOOTER -->
+<section id="lookbook">
+  <div class="rv"><div class="s-lbl">Visual Journal</div><h2 class="s-ttl">AW25 <span class="em">Lookbook</span></h2></div>
+  <div class="lb-grid rv">
+    <div class="lb tall"><div class="lb-in" style="background:linear-gradient(170deg,#1a1814,#0d0d0b)"><div class="lb-gl">I</div><div class="lb-ov"><div class="lb-txt">THE COAT<br><span style="font-family:'EB Garamond',serif;font-style:italic;font-size:.85rem">Obsidian Series</span></div></div></div></div>
+    <div class="lb"><div class="lb-in" style="background:linear-gradient(145deg,#22201a,#16140e)"><div class="lb-gl" style="font-size:4rem">II</div><div class="lb-ov"><div class="lb-txt">THE SHIRT<br><span style="font-family:'EB Garamond',serif;font-style:italic;font-size:.85rem">Linen Edit</span></div></div></div></div>
+    <div class="lb"><div class="lb-in" style="background:linear-gradient(160deg,#1e1c18,#121210)"><div class="lb-gl" style="font-size:4rem">III</div><div class="lb-ov"><div class="lb-txt">THE KNIT<br><span style="font-family:'EB Garamond',serif;font-style:italic;font-size:.85rem">Merino Core</span></div></div></div></div>
+    <div class="lb"><div class="lb-in" style="background:linear-gradient(150deg,#2a2820,#181614)"><div class="lb-gl" style="font-size:4rem">IV</div><div class="lb-ov"><div class="lb-txt">TROUSERS<br><span style="font-family:'EB Garamond',serif;font-style:italic;font-size:.85rem">Tailored Line</span></div></div></div></div>
+    <div class="lb"><div class="lb-in" style="background:linear-gradient(140deg,#1c1a16,#0e0e0c)"><div class="lb-gl" style="font-size:4rem">V</div><div class="lb-ov"><div class="lb-txt">ACCESSORIES<br><span style="font-family:'EB Garamond',serif;font-style:italic;font-size:.85rem">The Details</span></div></div></div></div>
+  </div>
+</section>
+<section id="newsletter">
+  <div class="nl-l rv">
+    <div class="s-lbl">Inner Circle</div>
+    <h2 class="s-ttl">STAY <span class="em">Informed</span></h2>
+    <div class="s-div"></div>
+    <p>Early access to new drops, exclusive styling notes, and private trunk show invitations. For the man who dresses with intention.</p>
+    <form class="nl-form" onsubmit="subNL(event)"><input class="nl-inp" type="email" placeholder="Your email address" required/><button class="nl-sub" type="submit">Subscribe</button></form>
+  </div>
+  <div class="nl-r rv d2">
+    <div class="nlf"><div class="nlf-t">New Drops First</div><div class="nlf-d">Access new pieces before public release</div></div>
+    <div class="nlf"><div class="nlf-t">Style Notes</div><div class="nlf-d">Monthly editorial on building a lasting wardrobe</div></div>
+    <div class="nlf"><div class="nlf-t">Trunk Shows</div><div class="nlf-d">Private events in Mumbai, Delhi, and Bangalore</div></div>
+    <div class="nlf"><div class="nlf-t">Member Pricing</div><div class="nlf-d">Exclusive pricing on archival pieces</div></div>
+  </div>
+</section>
 <footer>
-  <div class="footer-top">
-    <div class="footer-brand">
-      <div class="footer-logo">Aurum</div>
-      <p class="footer-tagline">Where cuisine becomes ceremony.<br>Fine dining in the heart of Mumbai.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Navigate</h4>
-      <a href="#about">About Us</a>
-      <a href="#menu">Menu</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#reservations">Reservations</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <p>Bandra Kurla Complex</p>
-      <p>Mumbai, Maharashtra 400051</p>
-      <p>+91 22 4000 8000</p>
-      <p>hello@aurum.restaurant</p>
-    </div>
+  <div class="ft">
+    <div><a class="fl" href="#">VÖ<span>RN</span></a><p class="fa">Men's luxury fashion built on heritage, craft, and the belief that less — made better — is always more.</p></div>
+    <div class="fc"><h5>Shop</h5><a href="#">New Arrivals</a><a href="#">Outerwear</a><a href="#">Shirts</a><a href="#">Knitwear</a><a href="#">Trousers</a><a href="#">Accessories</a></div>
+    <div class="fc"><h5>House</h5><a href="#">Our Story</a><a href="#">Craftsmanship</a><a href="#">Sustainability</a><a href="#">Press</a><a href="#">Careers</a></div>
+    <div class="fc"><h5>Support</h5><a href="#">Shipping & Returns</a><a href="#">Size Guide</a><a href="#">Care Instructions</a><a href="#">Alterations</a><a href="#">Contact</a></div>
   </div>
-  <div class="footer-bottom">
-    <p class="footer-copy">© 2025 Aurum Restaurant. All rights reserved.</p>
-    <div class="footer-social">
-      <a href="#">Instagram</a>
-      <a href="#">Facebook</a>
-      <a href="#">TripAdvisor</a>
-    </div>
-  </div>
+  <div class="fb2"><p class="fc2">© 2025 VÖRN. All rights reserved.</p><div class="fs"><a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">LinkedIn</a></div></div>
 </footer>
-
+<div class="c-ov" id="cOv" onclick="cCart()"></div>
+<div class="c-drw" id="cDrw">
+  <div class="c-hd"><div class="c-ttl">YOUR BAG</div><button class="c-cls" onclick="cCart()">✕</button></div>
+  <div class="c-bd" id="cBd"></div>
+  <div class="c-ft" id="cFt" style="display:none">
+    <div class="c-row"><span>Subtotal</span><span id="cSub">₹0</span></div>
+    <div class="c-row"><span>Shipping</span><span>Complimentary</span></div>
+    <div class="c-row tot"><span>Total</span><span id="cTot">₹0</span></div>
+    <button class="c-co">Proceed to Checkout</button>
+  </div>
+</div>
+<div class="mo" id="mOv" onclick="hMO(event)">
+  <div class="mb" id="mBx">
+    <button class="mc" onclick="cMod()">✕</button>
+    <div class="mi" id="mImg"></div>
+    <div class="minfo" id="mInf"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
 <script>
-  // Sticky nav
-  window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
-  });
-
-  // Mobile nav
-  document.getElementById('hamburger').addEventListener('click', () => {
-    document.getElementById('mobileNav').classList.add('open');
-  });
-  document.getElementById('mobileClose').addEventListener('click', closeMobile);
-  function closeMobile() {
-    document.getElementById('mobileNav').classList.remove('open');
-  }
-
-  // Menu tabs
-  function switchTab(id) {
-    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    event.target.classList.add('active');
-  }
-
-  // Form submit
-  function submitReservation(e) {
-    e.preventDefault();
-    document.getElementById('resForm').style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
-  }
-
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => observer.observe(el));
+const PRODS=[
+  {id:1,name:"Obsidian Wool Coat",cat:"Outerwear",price:68500,badge:"new",e:"◈",colors:["#1a1a18","#3a3530","#4a3828"],sizes:["S","M","L","XL"],desc:"Double-faced Super 180s wool overcoat, hand-sewn by master tailors in Naples. Horn buttons, silk lining, hand-stitched lapels. The centrepiece of AW25.",stars:5},
+  {id:2,name:"Brushed Cashmere Blazer",cat:"Outerwear",price:48000,badge:"exc",e:"✦",colors:["#2a2820","#1a1a16","#3d3530"],sizes:["S","M","L","XL","XXL"],desc:"Single-breasted blazer in Loro Piana brushed cashmere. Patch pockets, working cuffs, half-canvas construction. Effortlessly between casual and formal.",stars:5},
+  {id:3,name:"Japanese Selvedge Trousers",cat:"Trousers",price:22800,badge:"new",e:"▣",colors:["#1a1612","#3a3020","#5a4a38"],sizes:["30","32","34","36","38"],desc:"Cut from Kojima selvedge denim in a relaxed high-rise silhouette. Raw hem, coin pocket, Japanese-style hidden rivet. Ages beautifully over years.",stars:4},
+  {id:4,name:"Linen Popover Shirt",cat:"Shirts",price:11200,badge:"",e:"◉",colors:["#E8DDD0","#2a2820","#A8956E"],sizes:["S","M","L","XL","XXL"],desc:"Washed Italian linen in an easy popover cut. Split hem, chest pocket, mother-of-pearl buttons, and a band collar. The essential summer shirt.",stars:4},
+  {id:5,name:"Merino Rollneck",cat:"Knitwear",price:16400,badge:"",e:"⊛",colors:["#2a2820","#C8A870","#3a3a36"],sizes:["S","M","L","XL"],desc:"18.5 micron Merino wool in a refined ribbed rollneck. Fully fashioned, minimal bulk, ultra-soft handle. Wears beautifully under a coat.",stars:5},
+  {id:6,name:"Cashmere Scarf",cat:"Accessories",price:8600,badge:"sale",oldPrice:12000,e:"✾",colors:["#3a3530","#8B6B35","#C8A870"],sizes:["One Size"],desc:"Plain-weave Scottish cashmere, 200×70cm. Fringed ends, hand-rolled edges. The most important accessory in a considered wardrobe.",stars:5},
+  {id:7,name:"Super 120s Wool Trouser",cat:"Trousers",price:19500,badge:"",e:"◇",colors:["#2a2820","#1a1a14","#3d3028"],sizes:["30","32","34","36"],desc:"Tailored high-rise trouser in Zegna Super 120s wool. Extended waistband, no break hem, hand-stitched side seams. The backbone of a formal wardrobe.",stars:5},
+  {id:8,name:"Oxford Button-Down",cat:"Shirts",price:9800,badge:"new",e:"◑",colors:["#F4F2EE","#2a2820","#A8956E"],sizes:["S","M","L","XL","XXL"],desc:"Pinpoint Oxford cotton, classic BD silhouette. Soft roll collar, box pleat, split hem. An essential piece that ages with grace.",stars:4},
+  {id:9,name:"Leather Bifold Wallet",cat:"Accessories",price:5800,badge:"",e:"◈",colors:["#2a1e14","#1a1a16","#8B6B35"],sizes:["One Size"],desc:"Vegetable-tanned bridle leather, burnished by hand. Six card slots, note compartment, slim profile that improves dramatically with age.",stars:5},
+  {id:10,name:"Shawl-Collar Cardigan",cat:"Knitwear",price:21000,badge:"exc",e:"❧",colors:["#3a3530","#C8A870","#1a1a14"],sizes:["S","M","L","XL"],desc:"Heavy-gauge cashmere-merino blend in a generous shawl collar. Four-button front, deep pockets, relaxed body — indoor layer or light outerwear.",stars:5},
+  {id:11,name:"Pleated Chino",cat:"Trousers",price:14800,badge:"new",e:"▤",colors:["#C8B89A","#2a2820","#3a3020"],sizes:["30","32","34","36","38"],desc:"Garment-dyed Italian cotton, generous double-pleat cut. High rise, side adjusters, clean hem. Bridges tailored and casual with ease.",stars:4},
+  {id:12,name:"Nubuck Derby Shoes",cat:"Accessories",price:32000,badge:"",e:"◎",colors:["#2a1e14","#8B6B35","#1a1a16"],sizes:["7","8","9","10","11"],desc:"Hand-welted nubuck leather derby. Double leather sole, natural edge, leather insole that moulds to your foot. Made in Northampton.",stars:5},
+];
+let cart=[],af='All',wishes=new Set(),sSize=null,sColor=0,cProd=null;
+// CURSOR
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+setInterval(()=>{rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px'},16);
+function addHover(el){el.addEventListener('mouseenter',()=>{cur.classList.add('h');ring.classList.add('h')});el.addEventListener('mouseleave',()=>{cur.classList.remove('h');ring.classList.remove('h')})}
+document.querySelectorAll('a,button,[onclick]').forEach(addHover);
+// SEARCH
+document.getElementById('searchBtn').addEventListener('click',()=>{document.getElementById('srchOv').classList.add('open');document.getElementById('srchInp').focus();document.body.style.overflow='hidden'});
+function cSrch(){document.getElementById('srchOv').classList.remove('open');document.body.style.overflow=''}
+document.getElementById('srchInp').addEventListener('input',function(){
+  const q=this.value.toLowerCase().trim(),h=document.getElementById('srchHint');
+  if(!q){h.textContent='Type to search the collection';return}
+  const r=PRODS.filter(p=>p.name.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q));
+  h.textContent=r.length+' result'+(r.length!==1?'s':'')+' found';
+  renderGrid(r);cSrch();
+});
+// MOB NAV
+document.getElementById('hamBtn').addEventListener('click',()=>document.getElementById('mobNav').classList.add('open'));
+document.getElementById('mobCls').addEventListener('click',cMob);
+function cMob(){document.getElementById('mobNav').classList.remove('open')}
+// PRODUCTS
+function getList(f){
+  let l=f==='All'?[...PRODS]:PRODS.filter(p=>p.cat===f);
+  const s=document.getElementById('sortSel').value;
+  if(s==='asc')l.sort((a,b)=>a.price-b.price);
+  else if(s==='desc')l.sort((a,b)=>b.price-a.price);
+  else if(s==='az')l.sort((a,b)=>a.name.localeCompare(b.name));
+  return l;
+}
+function stars(n){return Array(5).fill(0).map((_,i)=>`<svg class="st ${i<n?'f':'e'}" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`).join('')}
+function renderGrid(list){
+  const g=document.getElementById('prodGrid');
+  g.innerHTML=list.map(p=>`
+    <div class="pc rv" onclick="oMod(${p.id})">
+      <div class="pi">
+        <div class="pp">${p.e}</div>
+        ${p.badge?`<span class="pbg ${p.badge}">${p.badge==='exc'?'Exclusive':p.badge==='new'?'New':'Sale'}</span>`:''}
+        <div class="pha" onclick="event.stopPropagation()">
+          <button class="padd" onclick="qAdd(${p.id})">Add to Bag</button>
+          <div class="pqr">
+            <button class="pqb ${wishes.has(p.id)?'wished':''}" id="w${p.id}" onclick="tWish(${p.id})" style="flex:1;gap:.4rem;font-size:.58rem;letter-spacing:.1em">
+              <svg width="12" height="12" fill="${wishes.has(p.id)?'var(--accent)':'none'}" stroke="${wishes.has(p.id)?'var(--accent)':'currentColor'}" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              Wishlist
+            </button>
+            <button class="pqb" onclick="oMod(${p.id})">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="pb">VÖRN — ${p.cat}</div>
+      <div class="pn">${p.name}</div>
+      <div class="ppr"><span class="pp2">₹${p.price.toLocaleString('en-IN')}</span>${p.oldPrice?`<span class="po">₹${p.oldPrice.toLocaleString('en-IN')}</span>`:''}</div>
+      <div class="pst">${stars(p.stars)}</div>
+    </div>
+  `).join('');
+  g.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
+}
+function fBy(f,btn){
+  af=f;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  else document.querySelectorAll('.fb').forEach(b=>{if(b.textContent.trim()===f||(f==='All'&&b.textContent.trim()==='All'))b.classList.add('active')});
+  renderGrid(getList(f));
+  document.getElementById('products').scrollIntoView({behavior:'smooth'});
+}
+function resort(){renderGrid(getList(af))}
+// WISHLIST
+function tWish(id){
+  if(wishes.has(id)){wishes.delete(id);showToast('Removed from wishlist')}
+  else{wishes.add(id);showToast('Added to wishlist ♡')}
+  renderGrid(getList(af));
+}
+// MODAL
+function oMod(id){
+  cProd=PRODS.find(p=>p.id===id);sSize=cProd.sizes[0];sColor=0;
+  const p=cProd;
+  document.getElementById('mImg').innerHTML=`<span style="font-size:9rem">${p.e}</span>${p.badge?`<span class="mib pbg ${p.badge}">${p.badge==='exc'?'Exclusive':p.badge==='new'?'New':'Sale'}</span>`:''}`;
+  document.getElementById('mInf').innerHTML=`
+    <div class="m-br">VÖRN · ${p.cat}</div>
+    <div class="m-nm">${p.name}</div>
+    <div class="m-pr"><span class="m-p">₹${p.price.toLocaleString('en-IN')}</span>${p.oldPrice?`<span class="m-op">₹${p.oldPrice.toLocaleString('en-IN')}</span>`:''}</div>
+    <div class="pst">${stars(p.stars)}</div>
+    <div class="m-ds">${p.desc}</div>
+    <div><div class="m-lb">Colour</div><div class="mcl">${p.colors.map((c,i)=>`<div class="mcs${i===0?' a':''}" style="background:${c}" onclick="sCl(${i},this)"></div>`).join('')}</div></div>
+    <div><div class="m-lb">Size</div><div class="msz">${p.sizes.map((s,i)=>`<button class="msb${i===0?' a':''}" onclick="sSz('${s}',this)">${s}</button>`).join('')}</div></div>
+    <button class="madd" id="mAddBtn" onclick="addCart(${p.id})">Add to Bag</button>
+  `;
+  document.getElementById('mOv').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function cMod(){document.getElementById('mOv').classList.remove('open');document.body.style.overflow=''}
+function hMO(e){if(e.target===document.getElementById('mOv'))cMod()}
+function sSz(s,btn){sSize=s;document.querySelectorAll('.msb').forEach(b=>b.classList.remove('a'));btn.classList.add('a')}
+function sCl(i,el){sColor=i;document.querySelectorAll('.mcs').forEach(s=>s.classList.remove('a'));el.classList.add('a')}
+// CART
+function qAdd(id){const p=PRODS.find(x=>x.id===id);aItem(p,p.sizes[0])}
+function addCart(id){
+  const p=PRODS.find(x=>x.id===id);aItem(p,sSize);
+  const btn=document.getElementById('mAddBtn');
+  btn.textContent='✓ Added';btn.classList.add('done');
+  setTimeout(()=>{btn.textContent='Add to Bag';btn.classList.remove('done')},2000);
+}
+function aItem(p,size){
+  const k=`${p.id}|${size}`,ex=cart.find(i=>i.k===k);
+  if(ex)ex.qty++;else cart.push({k,id:p.id,name:p.name,price:p.price,size,e:p.e,qty:1});
+  uCart();showToast(p.name+' added to bag');
+}
+function chQty(k,d){const i=cart.find(x=>x.k===k);if(!i)return;i.qty+=d;if(i.qty<=0)cart=cart.filter(x=>x.k!==k);uCart()}
+function rmItem(k){cart=cart.filter(x=>x.k!==k);uCart();showToast('Item removed')}
+function uCart(){
+  const tot=cart.reduce((s,i)=>s+i.qty,0);
+  const badge=document.getElementById('cBadge');
+  badge.textContent=tot;badge.style.display=tot>0?'flex':'none';
+  const bd=document.getElementById('cBd'),ft=document.getElementById('cFt');
+  if(!cart.length){bd.innerHTML=`<div class="c-emp"><div class="c-eg">∅</div><p>Your bag is empty.<br>Explore the collection.</p></div>`;ft.style.display='none';return}
+  ft.style.display='block';
+  bd.innerHTML=cart.map(i=>`
+    <div class="c-item">
+      <div class="c-ii">${i.e}</div>
+      <div>
+        <div class="c-in">${i.name}</div>
+        <div class="c-im">Size: ${i.size}</div>
+        <div class="c-qr">
+          <div class="c-qty"><button class="cq" onclick="chQty('${i.k}',-1)">−</button><span class="c-qn">${i.qty}</span><button class="cq" onclick="chQty('${i.k}',1)">+</button></div>
+          <span class="c-ip">₹${(i.price*i.qty).toLocaleString('en-IN')}</span>
+        </div>
+        <button class="c-rm" onclick="rmItem('${i.k}')">Remove</button>
+      </div>
+    </div>
+  `).join('');
+  const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('cSub').textContent='₹'+sub.toLocaleString('en-IN');
+  document.getElementById('cTot').textContent='₹'+sub.toLocaleString('en-IN');
+}
+document.getElementById('cartBtn').addEventListener('click',oCart);
+function oCart(){document.getElementById('cDrw').classList.add('open');document.getElementById('cOv').classList.add('open');document.body.style.overflow='hidden'}
+function cCart(){document.getElementById('cDrw').classList.remove('open');document.getElementById('cOv').classList.remove('open');document.body.style.overflow=''}
+// TOAST
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600)}
+// NEWSLETTER
+function subNL(e){e.preventDefault();showToast('Welcome to the Inner Circle ✦');e.target.reset()}
+// REVEAL
+const rvObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rvObs.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
+// INIT
+renderGrid(getList('All'));uCart();
 </script>
 </body>
 </html>
