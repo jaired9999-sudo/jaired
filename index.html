@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aurum — Fine Dining</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A96E;
+      --gold-light: #E8D5A3;
+      --gold-dark: #8B6914;
+      --black: #0A0A0A;
+      --deep: #111008;
+      --off-white: #F5F0E8;
+      --muted: #7A7060;
+      --border: rgba(201,169,110,0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--off-white);
+      font-family: 'Tenor Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.8rem 5vw;
+      transition: background 0.4s, padding 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(12px);
+      padding: 1.1rem 5vw;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--off-white);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      transition: opacity 0.2s, color 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--gold); }
+    .nav-reserve {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 0.55rem 1.4rem;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+    }
+    .nav-reserve:hover { background: var(--gold); color: var(--black); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 1px; background: var(--off-white); display: block; transition: 0.3s; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid; place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 40%, rgba(201,169,110,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 80% at 20% 80%, rgba(139,105,20,0.05) 0%, transparent 60%),
+        linear-gradient(160deg, #0e0c07 0%, #0A0A0A 40%, #080806 100%);
+    }
+    .hero-lines {
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(90deg, rgba(201,169,110,0.04) 0px, rgba(201,169,110,0.04) 1px, transparent 1px, transparent 80px),
+        repeating-linear-gradient(0deg, rgba(201,169,110,0.04) 0px, rgba(201,169,110,0.04) 1px, transparent 1px, transparent 80px);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+      animation: heroFade 1.4s ease both;
+    }
+    @keyframes heroFade {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      animation: heroFade 1.4s 0.2s ease both;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(5rem, 14vw, 11rem);
+      font-weight: 300;
+      line-height: 0.88;
+      letter-spacing: 0.04em;
+      color: var(--off-white);
+      animation: heroFade 1.4s 0.35s ease both;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-subtitle {
+      margin-top: 2.5rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      animation: heroFade 1.4s 0.5s ease both;
+    }
+    .hero-cta {
+      margin-top: 3.5rem;
+      display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;
+      animation: heroFade 1.4s 0.65s ease both;
+    }
+    .btn-primary {
+      background: var(--gold); color: var(--black);
+      padding: 1rem 2.8rem;
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: background 0.25s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--off-white);
+      padding: 1rem 2.8rem;
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: border-color 0.25s, color 0.25s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted);
+      animation: heroFade 1.4s 1s ease both;
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%,100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 7rem 5vw; }
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.6rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--off-white);
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .divider {
+      width: 60px; height: 1px;
+      background: var(--gold);
+      margin: 2rem 0;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      background: var(--deep);
+    }
+    .about-visual {
+      position: relative;
+      aspect-ratio: 4/5;
+    }
+    .about-img-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #1a1608 0%, #2a2010 50%, #1a1608 100%);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .about-img-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 50% 30%, rgba(201,169,110,0.12) 0%, transparent 70%);
+    }
+    .about-img-inner {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem;
+      color: rgba(201,169,110,0.15);
+      font-weight: 300;
+      letter-spacing: -0.05em;
+      z-index: 1;
+    }
+    .about-frame {
+      position: absolute;
+      top: -1.5rem; left: -1.5rem;
+      width: calc(100% - 3rem); height: calc(100% - 3rem);
+      border: 1px solid var(--border);
+      pointer-events: none;
+    }
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 0.95rem;
+      margin-bottom: 1.4rem;
+    }
+    .about-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2rem; margin-top: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    /* ── MENU ── */
+    #menu { background: var(--black); }
+    .menu-header { text-align: center; margin-bottom: 4rem; }
+    .menu-header .divider { margin: 2rem auto; }
+    .menu-tabs {
+      display: flex; justify-content: center; gap: 0;
+      margin-bottom: 3.5rem;
+      border: 1px solid var(--border);
+      width: fit-content;
+      margin-left: auto; margin-right: auto;
+    }
+    .tab-btn {
+      padding: 0.8rem 2rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      font-family: 'Tenor Sans', sans-serif;
+      border-right: 1px solid var(--border);
+    }
+    .tab-btn:last-child { border-right: none; }
+    .tab-btn.active { background: var(--gold); color: var(--black); }
+    .tab-btn:hover:not(.active) { color: var(--gold); }
+    .menu-panel { display: none; }
+    .menu-panel.active { display: block; }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .menu-item {
+      padding: 2rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .menu-item:nth-child(even) { border-right: none; }
+    .menu-item:hover { background: rgba(201,169,110,0.03); }
+    .menu-item-top {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+    .menu-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--off-white);
+    }
+    .menu-item-price {
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+    .menu-item-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .menu-note {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      font-style: italic;
+    }
+
+    /* ── GALLERY ── */
+    #gallery {
+      background: var(--deep);
+      padding-bottom: 5rem;
+    }
+    .gallery-header { text-align: center; margin-bottom: 3.5rem; }
+    .gallery-header .divider { margin: 2rem auto; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 0.6rem;
+    }
+    .gallery-cell {
+      aspect-ratio: 1;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-cell:first-child { grid-column: span 2; aspect-ratio: unset; }
+    .gallery-inner {
+      width: 100%; height: 100%;
+      min-height: 220px;
+      background: linear-gradient(135deg, #1a1608, #2e2410);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .gallery-inner::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.4);
+      transition: opacity 0.3s;
+    }
+    .gallery-cell:hover .gallery-inner { transform: scale(1.04); }
+    .gallery-cell:hover .gallery-inner::after { opacity: 0.2; }
+    .gallery-icon {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 5rem);
+      color: rgba(201,169,110,0.2);
+      z-index: 1;
+    }
+    .gallery-label {
+      position: absolute; bottom: 1rem; left: 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.7);
+      z-index: 2;
+    }
+
+    /* ── RESERVATIONS ── */
+    #reservations {
+      background: var(--black);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .res-info {}
+    .res-info p {
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+    .res-details { margin-top: 2.5rem; }
+    .res-detail-item {
+      display: flex; gap: 1rem;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .res-detail-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      min-width: 100px;
+    }
+    .res-detail-value {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .res-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-group label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      color: var(--off-white);
+      padding: 0.85rem 1rem;
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .form-group select { cursor: pointer; }
+    .form-group select option { background: #111; }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group textarea { resize: none; height: 100px; }
+    .form-submit {
+      background: var(--gold); color: var(--black);
+      border: none;
+      padding: 1rem 2rem;
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+      margin-top: 0.5rem;
+    }
+    .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .form-success {
+      display: none;
+      background: rgba(201,169,110,0.08);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      text-align: center;
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--deep);
+      padding: 4rem 5vw 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem; margin-bottom: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .footer-brand {}
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 300;
+      letter-spacing: 0.25em; color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .footer-tagline {
+      font-size: 0.75rem; color: var(--muted);
+      letter-spacing: 0.12em; line-height: 1.8;
+    }
+    .footer-col h4 {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .footer-col p, .footer-col a {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 2;
+      text-decoration: none;
+      display: block;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy {
+      font-size: 0.7rem; color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .footer-social { display: flex; gap: 1.5rem; }
+    .footer-social a {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-social a:hover { color: var(--gold); }
+
+    /* ── FADE IN ON SCROLL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #about { grid-template-columns: 1fr; }
+      .about-visual { max-width: 400px; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .menu-item { border-right: none; }
+      .menu-item:nth-child(even) { border-right: none; }
+      #reservations { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-cell:first-child { grid-column: span 2; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links, .nav-reserve { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 560px) {
+      section { padding: 5rem 6vw; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-cell:first-child { grid-column: span 1; }
+      .menu-tabs { flex-direction: column; width: 100%; }
+      .tab-btn { border-right: none; border-bottom: 1px solid var(--border); }
+      .tab-btn:last-child { border-bottom: none; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Mobile nav drawer */
+    .mobile-nav {
+      display: none;
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(10,10,10,0.98);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem; font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--off-white);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .mobile-nav a:hover { color: var(--gold); }
+    .mobile-close {
+      position: absolute; top: 2rem; right: 5vw;
+      font-size: 2rem; color: var(--muted);
+      background: none; border: none; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#">Aurum</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#reservations">Reservations</a></li>
+  </ul>
+  <a class="nav-reserve" href="#reservations">Reserve a Table</a>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#menu" onclick="closeMobile()">Menu</a>
+  <a href="#gallery" onclick="closeMobile()">Gallery</a>
+  <a href="#reservations" onclick="closeMobile()">Reserve</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Est. 2018 &nbsp;·&nbsp; Mumbai, India</p>
+    <h1 class="hero-title">Au<em>rum</em></h1>
+    <p class="hero-subtitle">Where Cuisine Becomes Ceremony</p>
+    <div class="hero-cta">
+      <a href="#reservations" class="btn-primary">Reserve a Table</a>
+      <a href="#menu" class="btn-outline">View Menu</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-img-placeholder">
+      <div class="about-img-inner">A</div>
+    </div>
+    <div class="about-frame"></div>
+  </div>
+  <div class="about-text reveal">
+    <p class="section-label">Our Story</p>
+    <h2 class="section-title">A pursuit of<br><em>perfection</em> on<br>every plate</h2>
+    <div class="divider"></div>
+    <p>Aurum was born from a singular obsession — that a meal should move you the way great art does. Founded by Chef Aryan Mehta, we blend the forgotten flavours of subcontinental heritage with the precision of contemporary French technique.</p>
+    <p>Every ingredient is sourced with intention. Every plate is a composition. Every evening, an experience that begins the moment you walk through our doors.</p>
+    <div class="about-stats">
+      <div>
+        <div class="stat-num">7+</div>
+        <div class="stat-label">Years of Excellence</div>
+      </div>
+      <div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">Michelin Stars</div>
+      </div>
+      <div>
+        <div class="stat-num">40</div>
+        <div class="stat-label">Seats Only</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-header reveal">
+    <p class="section-label">Culinary Offerings</p>
+    <h2 class="section-title">The <em>Menu</em></h2>
+    <div class="divider"></div>
+    <p style="color:var(--muted);font-size:0.85rem;max-width:480px;margin:0 auto;line-height:1.9;letter-spacing:0.04em;">Our menu changes with the season, celebrating the finest produce at its peak. Tasting menus are available for the full Aurum experience.</p>
+  </div>
+
+  <div class="menu-tabs reveal">
+    <button class="tab-btn active" onclick="switchTab('starters')">Starters</button>
+    <button class="tab-btn" onclick="switchTab('mains')">Mains</button>
+    <button class="tab-btn" onclick="switchTab('desserts')">Desserts</button>
+    <button class="tab-btn" onclick="switchTab('wines')">Wines</button>
+  </div>
+
+  <div id="starters" class="menu-panel active reveal">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Charred Leek Velouté</span>
+          <span class="menu-item-price">₹1,400</span>
+        </div>
+        <p class="menu-item-desc">Smoked crème fraîche, truffle oil, micro herbs, sourdough tuile</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Scallop & Saffron</span>
+          <span class="menu-item-price">₹2,200</span>
+        </div>
+        <p class="menu-item-desc">Pan-seared diver scallop, saffron beurre blanc, caramelised fennel</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Heritage Beetroot</span>
+          <span class="menu-item-price">₹1,100</span>
+        </div>
+        <p class="menu-item-desc">Goat cheese mousse, candied walnut, aged balsamic, edible flowers</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Foie Gras Torchon</span>
+          <span class="menu-item-price">₹2,800</span>
+        </div>
+        <p class="menu-item-desc">Fig & port chutney, brioche toast, Szechuan pepper caramel</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="mains" class="menu-panel reveal">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">A5 Wagyu Striploin</span>
+          <span class="menu-item-price">₹8,500</span>
+        </div>
+        <p class="menu-item-desc">Japanese A5 wagyu, bone marrow butter, truffle jus, pomme purée</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Halibut en Croûte</span>
+          <span class="menu-item-price">₹4,200</span>
+        </div>
+        <p class="menu-item-desc">Wild halibut in herb pastry, lobster bisque, sea vegetables</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Duck à l'Orange</span>
+          <span class="menu-item-price">₹3,800</span>
+        </div>
+        <p class="menu-item-desc">Slow-roasted duck breast, Nagpur orange glaze, braised lentils, crispy skin</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Wild Mushroom Risotto</span>
+          <span class="menu-item-price">₹2,600</span>
+        </div>
+        <p class="menu-item-desc">Carnaroli rice, porcini & chanterelle, aged Parmigiano, white truffle shavings</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="desserts" class="menu-panel reveal">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Valrhona Soufflé</span>
+          <span class="menu-item-price">₹1,600</span>
+        </div>
+        <p class="menu-item-desc">70% dark chocolate soufflé, vanilla bean ice cream, sea salt caramel</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Jasmine Panna Cotta</span>
+          <span class="menu-item-price">₹1,200</span>
+        </div>
+        <p class="menu-item-desc">Jasmine tea set cream, lychee granita, rose petal tuile</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Mango Tarte Tatin</span>
+          <span class="menu-item-price">₹1,400</span>
+        </div>
+        <p class="menu-item-desc">Alphonso mango, caramelised puff pastry, cardamom Chantilly</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Cheese Trolley</span>
+          <span class="menu-item-price">₹1,800</span>
+        </div>
+        <p class="menu-item-desc">Seasonal selection of 5 artisan cheeses, accompaniments, house crackers</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="wines" class="menu-panel reveal">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Puligny-Montrachet</span>
+          <span class="menu-item-price">₹12,000</span>
+        </div>
+        <p class="menu-item-desc">Louis Jadot · Burgundy, France · 2019 — Crisp, mineral, stone fruit</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Château Margaux</span>
+          <span class="menu-item-price">₹38,000</span>
+        </div>
+        <p class="menu-item-desc">Premier Grand Cru · Bordeaux, France · 2015 — Full, complex, violet notes</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Sula Rasa Shiraz</span>
+          <span class="menu-item-price">₹4,500</span>
+        </div>
+        <p class="menu-item-desc">Sula Vineyards · Nashik, India · 2021 — Spiced plum, smooth tannins</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <span class="menu-item-name">Krug Grande Cuvée</span>
+          <span class="menu-item-price">₹28,000</span>
+        </div>
+        <p class="menu-item-desc">Champagne · France · NV — Toasty brioche, creamy mousse, citrus zest</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="menu-note reveal">Prices are exclusive of taxes. Tasting menu available on request — ₹9,500 per person.</p>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header reveal">
+    <p class="section-label">Visual Journey</p>
+    <h2 class="section-title">The <em>Atmosphere</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-cell">
+      <div class="gallery-inner" style="background: linear-gradient(120deg,#1a1200,#3d2e00,#1a1200);">
+        <span class="gallery-icon">✦</span>
+        <span class="gallery-label">The Dining Room</span>
+      </div>
+    </div>
+    <div class="gallery-cell">
+      <div class="gallery-inner" style="background: linear-gradient(160deg,#0f0e08,#2a2015);">
+        <span class="gallery-icon">◈</span>
+        <span class="gallery-label">Signature Dishes</span>
+      </div>
+    </div>
+    <div class="gallery-cell">
+      <div class="gallery-inner" style="background: linear-gradient(120deg,#140f00,#281e00);">
+        <span class="gallery-icon">❧</span>
+        <span class="gallery-label">Wine Cellar</span>
+      </div>
+    </div>
+    <div class="gallery-cell">
+      <div class="gallery-inner" style="background: linear-gradient(180deg,#0e0e0a,#1e1c10);">
+        <span class="gallery-icon">⊛</span>
+        <span class="gallery-label">The Kitchen</span>
+      </div>
+    </div>
+    <div class="gallery-cell">
+      <div class="gallery-inner" style="background: linear-gradient(135deg,#0a0900,#201800);">
+        <span class="gallery-icon">✾</span>
+        <span class="gallery-label">Private Dining</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATIONS -->
+<section id="reservations">
+  <div class="res-info reveal">
+    <p class="section-label">Book Your Evening</p>
+    <h2 class="section-title">Make a<br><em>Reservation</em></h2>
+    <div class="divider"></div>
+    <p>We accommodate up to 40 guests per sitting. Reservations are highly recommended and can be made up to 60 days in advance. For private dining enquiries or special occasions, please contact us directly.</p>
+    <div class="res-details">
+      <div class="res-detail-item">
+        <span class="res-detail-label">Location</span>
+        <span class="res-detail-value">Bandra Kurla Complex,<br>Mumbai, Maharashtra 400051</span>
+      </div>
+      <div class="res-detail-item">
+        <span class="res-detail-label">Hours</span>
+        <span class="res-detail-value">Tuesday – Sunday<br>Dinner: 7:00 PM – 11:00 PM</span>
+      </div>
+      <div class="res-detail-item">
+        <span class="res-detail-label">Contact</span>
+        <span class="res-detail-value">+91 22 4000 8000<br>hello@aurum.restaurant</span>
+      </div>
+      <div class="res-detail-item">
+        <span class="res-detail-label">Dress Code</span>
+        <span class="res-detail-value">Smart Elegant — we kindly request no casual wear</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <form class="res-form" id="resForm" onsubmit="submitReservation(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Aryan" required />
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Mehta" required />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="aryan@email.com" required />
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" placeholder="+91 98000 00000" required />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" required />
+        </div>
+        <div class="form-group">
+          <label>Time</label>
+          <select required>
+            <option value="">Select time</option>
+            <option>7:00 PM</option>
+            <option>7:30 PM</option>
+            <option>8:00 PM</option>
+            <option>8:30 PM</option>
+            <option>9:00 PM</option>
+            <option>9:30 PM</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Number of Guests</label>
+        <select required>
+          <option value="">Select guests</option>
+          <option>1 Guest</option>
+          <option>2 Guests</option>
+          <option>3 Guests</option>
+          <option>4 Guests</option>
+          <option>5–6 Guests</option>
+          <option>7–8 Guests</option>
+          <option>Private Dining (9+)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Special Requests</label>
+        <textarea placeholder="Dietary requirements, allergies, occasion, seating preferences…"></textarea>
+      </div>
+      <button type="submit" class="form-submit">Confirm Reservation</button>
+    </form>
+    <div class="form-success" id="formSuccess">
+      ✦ &nbsp; Thank you. Your reservation request has been received. We will confirm within 24 hours.
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">Aurum</div>
+      <p class="footer-tagline">Where cuisine becomes ceremony.<br>Fine dining in the heart of Mumbai.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="#about">About Us</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#reservations">Reservations</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>Bandra Kurla Complex</p>
+      <p>Mumbai, Maharashtra 400051</p>
+      <p>+91 22 4000 8000</p>
+      <p>hello@aurum.restaurant</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Aurum Restaurant. All rights reserved.</p>
+    <div class="footer-social">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">TripAdvisor</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Mobile nav
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.add('open');
+  });
+  document.getElementById('mobileClose').addEventListener('click', closeMobile);
+  function closeMobile() {
+    document.getElementById('mobileNav').classList.remove('open');
+  }
+
+  // Menu tabs
+  function switchTab(id) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Form submit
+  function submitReservation(e) {
+    e.preventDefault();
+    document.getElementById('resForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
