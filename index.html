@@ -1,603 +1,1076 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VÖRN — Men's Luxury Fashion</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@200;300;400&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0C0C0B;--bg2:#111110;--bg3:#161614;--surface:#1C1C1A;
-  --white:#F4F2EE;--off:#B8B4AC;--muted:#6A6860;
-  --border:#2A2A28;--border2:rgba(255,255,255,0.07);
-  --accent:#C8A96A;--accent2:#8B6B35;--red:#B84040;
-}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
-#cur{position:fixed;width:8px;height:8px;background:var(--white);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s,background .2s,border-radius .2s}
-#cur-ring{position:fixed;width:40px;height:40px;border:1px solid rgba(200,169,106,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .06s,top .06s,width .2s,height .2s}
-#cur.h{width:14px;height:14px;background:var(--accent);border-radius:2px}
-#cur-ring.h{width:56px;height:56px;border-color:var(--accent)}
-.topbar{background:var(--accent2);padding:.5rem;text-align:center;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--white)}
-nav{position:sticky;top:0;z-index:300;background:rgba(12,12,11,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5vw;display:flex;align-items:stretch;justify-content:space-between;height:64px}
-.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.12em;color:var(--white);text-decoration:none;display:flex;align-items:center;transition:color .2s}
-.nav-logo span{color:var(--accent)}
-.nav-logo:hover{color:var(--accent)}
-.nav-links{display:flex;align-items:stretch;list-style:none}
-.nav-links a{display:flex;align-items:center;padding:0 1.3rem;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;position:relative;font-weight:400}
-.nav-links a::after{content:'';position:absolute;bottom:0;left:1.3rem;right:1.3rem;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .25s}
-.nav-links a:hover{color:var(--white)}
-.nav-links a:hover::after{transform:scaleX(1)}
-.nav-right{display:flex;align-items:center;gap:.5rem}
-.nav-btn{background:none;border:none;cursor:none;color:var(--muted);padding:.6rem;transition:color .2s;display:flex;align-items:center}
-.nav-btn:hover{color:var(--white)}
-.c-wrap{position:relative}
-.c-badge{position:absolute;top:4px;right:4px;background:var(--accent);color:var(--bg);width:14px;height:14px;border-radius:50%;font-size:.5rem;display:none;align-items:center;justify-content:center;font-weight:700}
-.ham{display:none;flex-direction:column;gap:4px;cursor:none;padding:.6rem;background:none;border:none}
-.ham span{width:22px;height:1px;background:var(--white);display:block}
-/* SEARCH */
-.srch-ov{position:fixed;inset:0;background:rgba(12,12,11,.97);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
-.srch-ov.open{display:flex;animation:fIn .2s}
-.srch-close{position:absolute;top:2rem;right:5vw;background:none;border:none;cursor:none;color:var(--muted);font-size:1.4rem;transition:color .2s}
-.srch-close:hover{color:var(--white)}
-.srch-label{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.25em;color:var(--muted)}
-.srch-field{display:flex;align-items:center;gap:1rem;border-bottom:1px solid var(--border);padding:1rem 0;width:min(680px,80vw)}
-.srch-field input{flex:1;background:none;border:none;font-family:'EB Garamond',serif;font-size:clamp(2rem,4vw,3rem);color:var(--white);outline:none}
-.srch-field input::placeholder{color:var(--muted)}
-.srch-hint{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
-/* HERO */
-#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
-.hero-l{background:var(--bg2);display:flex;flex-direction:column;justify-content:flex-end;padding:6vw 5vw;position:relative;overflow:hidden}
-.bg-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(10rem,22vw,20rem);line-height:.85;color:rgba(255,255,255,.02);position:absolute;top:50%;left:-2vw;transform:translateY(-55%);pointer-events:none;user-select:none}
-.h-eye{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;animation:sUp .8s .1s both}
-.h-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,9vw,9rem);line-height:.92;letter-spacing:.03em;margin-bottom:2.5rem;animation:sUp .8s .2s both}
-.h-title .ac{color:var(--accent)}
-.h-title .it{font-family:'EB Garamond',serif;font-style:italic;font-size:.75em}
-.h-body{font-size:.85rem;line-height:1.9;color:var(--off);max-width:360px;margin-bottom:3rem;animation:sUp .8s .3s both}
-.h-cta{display:flex;gap:1rem;flex-wrap:wrap;animation:sUp .8s .4s both}
-.btn-fill{background:var(--white);color:var(--bg);padding:.85rem 2.4rem;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;border:none;cursor:none;text-decoration:none;display:inline-flex;align-items:center;gap:.6rem;transition:background .2s,transform .2s;font-family:'DM Sans',sans-serif;font-weight:400}
-.btn-fill:hover{background:var(--accent);transform:translateY(-2px)}
-.btn-line{background:none;color:var(--white);padding:.85rem 2.4rem;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;border:1px solid var(--border);cursor:none;text-decoration:none;display:inline-flex;align-items:center;gap:.6rem;transition:border-color .2s,color .2s,transform .2s;font-family:'DM Sans',sans-serif;font-weight:400}
-.btn-line:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
-.h-stats{display:flex;gap:2.5rem;margin-top:4rem;padding-top:2.5rem;border-top:1px solid var(--border);animation:sUp .8s .5s both}
-.sv{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:.05em;color:var(--accent);display:block}
-.sl{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
-.hero-r{position:relative;overflow:hidden;background:var(--bg3)}
-.hero-r-bg{position:absolute;inset:0;background:linear-gradient(160deg,#1a1a18,#0d0d0b,#141412)}
-.hero-vw{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-.hero-shape{width:55%;aspect-ratio:2/3;position:relative;animation:hRev 1s .6s both}
-@keyframes hRev{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
-.hero-shape-i{width:100%;height:100%;background:linear-gradient(170deg,#2a2820,#1a1812,#22201a);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.hero-shape-i::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(200,169,106,.08),transparent)}
-.h-glyph{font-family:'Bebas Neue',sans-serif;font-size:9rem;color:rgba(200,169,106,.05);user-select:none}
-.hero-tag{position:absolute;bottom:2rem;right:2rem;background:var(--surface);border:1px solid var(--border);padding:1rem 1.4rem;animation:sUp .8s .9s both}
-.hero-tag-l{font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
-.hero-tag-v{font-family:'EB Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--accent)}
-.hero-line{position:absolute;top:50%;left:0;width:100%;height:1px;background:linear-gradient(to right,transparent,rgba(200,169,106,.1),transparent);pointer-events:none}
-/* TICKER */
-.ticker{background:var(--accent2);overflow:hidden;padding:.7rem 0;white-space:nowrap}
-.ticker-t{display:inline-block;animation:tick 30s linear infinite}
-.ticker-t span{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(244,242,238,.75);padding:0 2.5rem}
-.ticker-t .sep{color:rgba(244,242,238,.3);padding:0 .5rem}
-@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-/* SECTIONS */
-.s-lbl{font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
-.s-ttl{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5vw,5rem);letter-spacing:.05em;line-height:.95}
-.s-ttl .em{font-family:'EB Garamond',serif;font-style:italic;font-size:.8em;letter-spacing:.02em}
-.s-div{width:40px;height:2px;background:var(--accent);margin:1.8rem 0}
-/* CATEGORIES */
-#categories{padding:6rem 5vw;background:var(--bg2)}
-.cat-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem}
-.lnk{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s}
-.lnk:hover{color:var(--accent)}
-.cat-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:3px}
-.cc{position:relative;overflow:hidden;cursor:none}
-.cc.tall{grid-row:span 2}
-.cc-in{width:100%;height:100%;min-height:280px;display:flex;align-items:flex-end;position:relative;transition:transform .6s ease}
-.cc:hover .cc-in{transform:scale(1.03)}
-.cc-gl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,9vw,9rem);color:rgba(255,255,255,.04);user-select:none;transition:color .4s}
-.cc:hover .cc-gl{color:rgba(200,169,106,.07)}
-.cc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,12,11,.85) 0%,transparent 55%);transition:opacity .3s}
-.cc:hover .cc-ov{opacity:.75}
-.cc-info{position:relative;z-index:2;padding:1.8rem 1.6rem;width:100%}
-.cc-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.08em;color:var(--white);margin-bottom:.2rem}
-.cc-sub{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,242,238,.45);transition:color .3s}
-.cc:hover .cc-sub{color:var(--accent)}
-/* PRODUCTS */
-#products{padding:5rem 5vw 7rem;background:var(--bg)}
-.ph{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1.5rem}
-.fr{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-.fb{background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;padding:.4rem 1rem;cursor:none;transition:all .2s;font-weight:300}
-.fb.active,.fb:hover{background:var(--white);color:var(--bg);border-color:var(--white)}
-.sw{display:flex;align-items:center;gap:.8rem}
-.sw-lbl{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.ss{background:var(--surface);border:1px solid var(--border);color:var(--white);font-family:'DM Sans',sans-serif;font-size:.62rem;padding:.4rem .8rem;cursor:none;outline:none;font-weight:300}
-.ss option{background:var(--bg2)}
-.pg{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5rem 1.5rem}
-.pc{cursor:none;position:relative}
-.pi{aspect-ratio:3/4;background:var(--surface);position:relative;overflow:hidden;margin-bottom:1.1rem}
-.pp{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:5rem;color:rgba(255,255,255,.05);transition:transform .5s,color .3s}
-.pc:hover .pp{transform:scale(1.05);color:rgba(200,169,106,.08)}
-.pbg{position:absolute;top:.8rem;left:.8rem;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .65rem;font-weight:400;z-index:2}
-.pbg.new{background:var(--white);color:var(--bg)}
-.pbg.sale{background:var(--red);color:var(--white)}
-.pbg.exc{background:var(--accent2);color:var(--white)}
-.pha{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;gap:.5rem;opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s;z-index:3}
-.pc:hover .pha{opacity:1;transform:translateY(0)}
-.padd{background:var(--white);color:var(--bg);border:none;padding:.75rem;font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;cursor:none;width:100%;transition:background .2s;font-weight:400}
-.padd:hover{background:var(--accent)}
-.pqr{display:flex;gap:.5rem}
-.pqb{flex:0 0 42px;height:38px;background:rgba(28,28,26,.85);backdrop-filter:blur(8px);border:1px solid var(--border);cursor:none;display:flex;align-items:center;justify-content:center;color:var(--off);transition:background .2s,color .2s;font-size:.7rem;letter-spacing:.1em;font-family:'DM Sans',sans-serif}
-.pqb:hover{background:var(--surface);color:var(--white)}
-.pqb.wished svg{fill:var(--accent);stroke:var(--accent)}
-.pb{font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:.3rem}
-.pn{font-family:'EB Garamond',serif;font-size:1.05rem;color:var(--white);margin-bottom:.4rem;line-height:1.3}
-.ppr{display:flex;align-items:baseline;gap:.6rem;margin-bottom:.4rem}
-.pp2{font-size:.82rem;color:var(--white);letter-spacing:.04em;font-weight:300}
-.po{font-size:.72rem;color:var(--muted);text-decoration:line-through}
-.pst{display:flex;gap:2px}
-.st{width:9px;height:9px}
-.st.f{fill:var(--accent)}
-.st.e{fill:none;stroke:var(--muted);stroke-width:1.5}
-/* MODAL */
-.mo{position:fixed;inset:0;background:rgba(8,8,8,.8);z-index:600;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
-.mo.open{display:flex;animation:fIn .3s}
-.mb{background:var(--bg2);width:92vw;max-width:940px;max-height:92vh;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;position:relative;border:1px solid var(--border);animation:sUp .35s both}
-.mc{position:absolute;top:1.2rem;right:1.2rem;background:var(--surface);border:none;cursor:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:var(--muted);z-index:10;transition:color .2s,background .2s;font-size:1rem}
-.mc:hover{background:var(--border);color:var(--white)}
-.mi{background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:9rem;color:rgba(255,255,255,.05);position:relative;min-height:400px}
-.mib{position:absolute;top:1rem;left:1rem;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .65rem;font-weight:400}
-.minfo{padding:2.5rem 2rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.3rem}
-.m-br{font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent)}
-.m-nm{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:.04em;line-height:.95;color:var(--white)}
-.m-pr{display:flex;align-items:baseline;gap:.8rem}
-.m-p{font-size:1.4rem;color:var(--white);font-weight:300}
-.m-op{font-size:1rem;color:var(--muted);text-decoration:line-through}
-.m-ds{font-size:.8rem;line-height:1.9;color:var(--off)}
-.m-lb{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;font-weight:400}
-.msz{display:flex;gap:.4rem;flex-wrap:wrap}
-.msb{width:46px;height:42px;background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.7rem;cursor:none;transition:all .2s;font-weight:300}
-.msb.a,.msb:hover{background:var(--white);color:var(--bg);border-color:var(--white)}
-.mcl{display:flex;gap:.6rem}
-.mcs{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:none;transition:outline .2s;outline:2px solid transparent;outline-offset:3px}
-.mcs.a{outline-color:var(--accent)}
-.madd{background:var(--white);color:var(--bg);border:none;width:100%;padding:1rem;font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;cursor:none;transition:background .25s;margin-top:auto;font-weight:400}
-.madd:hover,.madd.done{background:var(--accent)}
-/* EDITORIAL */
-#editorial{padding:6rem 5vw;background:var(--bg3);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.ev{aspect-ratio:4/3;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.ev::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 40% 40%,rgba(200,169,106,.07),transparent)}
-.ev-gl{font-family:'Bebas Neue',sans-serif;font-size:12rem;color:rgba(255,255,255,.03);user-select:none}
-.ev-corner{position:absolute;top:1rem;right:1rem;font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent2);padding:.4rem .8rem}
-.ef-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
-.ef{padding:1.2rem;border:1px solid var(--border);transition:border-color .25s}
-.ef:hover{border-color:var(--accent2)}
-.ef-icon{color:var(--accent);margin-bottom:.5rem}
-.ef-ttl{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--white);margin-bottom:.3rem;font-weight:400}
-.ef-desc{font-size:.72rem;color:var(--muted);line-height:1.7}
-/* LOOKBOOK */
-#lookbook{padding:5rem 5vw;background:var(--bg2)}
-.lb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:3rem}
-.lb{position:relative;overflow:hidden;cursor:none}
-.lb.tall{grid-row:span 2}
-.lb-in{width:100%;height:100%;min-height:240px;display:flex;align-items:center;justify-content:center;transition:transform .6s ease;position:relative}
-.lb:hover .lb-in{transform:scale(1.04)}
-.lb-ov{position:absolute;inset:0;background:rgba(12,12,11,.5);opacity:0;transition:opacity .3s;display:flex;align-items:center;justify-content:center}
-.lb:hover .lb-ov{opacity:1}
-.lb-txt{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.12em;color:var(--white);text-align:center}
-.lb-gl{font-family:'Bebas Neue',sans-serif;font-size:6rem;color:rgba(255,255,255,.04);user-select:none}
-/* CART */
-.c-ov{position:fixed;inset:0;background:rgba(8,8,8,.6);z-index:450;display:none}
-.c-ov.open{display:block}
-.c-drw{position:fixed;right:-500px;top:0;bottom:0;width:100%;max-width:480px;background:var(--bg2);z-index:460;border-left:1px solid var(--border);transition:right .4s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
-.c-drw.open{right:0}
-.c-hd{padding:1.6rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.c-ttl{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.08em}
-.c-cls{background:none;border:none;cursor:none;color:var(--muted);font-size:1.1rem;transition:color .2s}
-.c-cls:hover{color:var(--white)}
-.c-bd{flex:1;overflow-y:auto;padding:1.5rem 2rem}
-.c-emp{text-align:center;padding:4rem 1rem}
-.c-eg{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:var(--border);margin-bottom:1rem}
-.c-emp p{font-size:.78rem;color:var(--muted);line-height:1.8}
-.c-item{display:grid;grid-template-columns:72px 1fr;gap:1rem;padding:1.2rem 0;border-bottom:1px solid var(--border)}
-.c-ii{aspect-ratio:3/4;background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:rgba(255,255,255,.08)}
-.c-in{font-family:'EB Garamond',serif;font-size:.95rem;color:var(--white);margin-bottom:.2rem}
-.c-im{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem}
-.c-qr{display:flex;align-items:center;justify-content:space-between}
-.c-qty{display:flex;align-items:center;gap:.6rem}
-.cq{width:24px;height:24px;border:1px solid var(--border);background:none;color:var(--white);cursor:none;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:background .2s,border-color .2s}
-.cq:hover{background:var(--surface);border-color:var(--accent)}
-.c-qn{font-size:.78rem;min-width:16px;text-align:center}
-.c-ip{font-size:.82rem;color:var(--white)}
-.c-rm{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:none;font-family:'DM Sans',sans-serif;transition:color .2s;text-decoration:underline;display:block;margin-top:.5rem}
-.c-rm:hover{color:var(--white)}
-.c-ft{padding:1.5rem 2rem;border-top:1px solid var(--border)}
-.c-row{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-bottom:.5rem}
-.c-row.tot{font-size:.9rem;color:var(--white);border-top:1px solid var(--border);padding-top:.8rem;margin-top:.6rem}
-.c-co{background:var(--white);color:var(--bg);border:none;width:100%;padding:1rem;font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;cursor:none;transition:background .25s;margin-top:1rem;font-weight:400}
-.c-co:hover{background:var(--accent)}
-/* NEWSLETTER */
-#newsletter{padding:5rem 5vw;background:var(--bg);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;border-top:1px solid var(--border)}
-.nl-l p{font-size:.82rem;line-height:1.9;color:var(--off);max-width:380px;margin-top:1rem}
-.nl-form{display:flex;border:1px solid var(--border);margin-top:2rem}
-.nl-inp{flex:1;background:none;border:none;font-family:'DM Sans',sans-serif;font-size:.8rem;color:var(--white);padding:.95rem 1.2rem;outline:none}
-.nl-inp::placeholder{color:var(--muted)}
-.nl-sub{background:var(--accent2);color:var(--white);border:none;padding:.95rem 1.8rem;font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;cursor:none;transition:background .2s;white-space:nowrap;font-weight:400}
-.nl-sub:hover{background:var(--accent)}
-.nl-r{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.nlf{padding:1.3rem;border:1px solid var(--border);transition:border-color .25s}
-.nlf:hover{border-color:var(--accent2)}
-.nlf-t{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--white);margin-bottom:.35rem;font-weight:400}
-.nlf-d{font-size:.72rem;color:var(--muted);line-height:1.7}
-footer{background:var(--bg3);border-top:1px solid var(--border);padding:5rem 5vw 2rem}
-.ft{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:3rem;margin-bottom:4rem;padding-bottom:4rem;border-bottom:1px solid var(--border)}
-.fl{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.12em;color:var(--white);margin-bottom:.8rem;display:block;text-decoration:none}
-.fl span{color:var(--accent)}
-.fa{font-size:.75rem;color:var(--muted);line-height:1.9;max-width:220px}
-.fc h5{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1.4rem;font-weight:400}
-.fc a{display:block;font-size:.75rem;color:var(--muted);text-decoration:none;line-height:2.3;transition:color .2s}
-.fc a:hover{color:var(--white)}
-.fb2{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
-.fc2{font-size:.6rem;color:var(--muted);letter-spacing:.1em}
-.fs{display:flex;gap:1.5rem}
-.fs a{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
-.fs a:hover{color:var(--accent)}
-.toast{position:fixed;bottom:2.5rem;left:50%;transform:translateX(-50%) translateY(60px);background:var(--white);color:var(--bg);padding:.8rem 2rem;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;z-index:700;transition:transform .3s cubic-bezier(.4,0,.2,1);white-space:nowrap;font-weight:400}
-.toast.show{transform:translateX(-50%) translateY(0)}
-.rv{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
-.rv.in{opacity:1;transform:none}
-.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
-.mob-nav{position:fixed;inset:0;background:var(--bg);z-index:500;display:none;flex-direction:column;justify-content:center;align-items:center;gap:2rem}
-.mob-nav.open{display:flex;animation:fIn .25s}
-.mob-cls{position:absolute;top:1.5rem;right:5vw;background:none;border:none;cursor:none;color:var(--muted);font-size:1.4rem}
-.mob-nav a{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.1em;color:var(--white);text-decoration:none;transition:color .2s}
-.mob-nav a:hover{color:var(--accent)}
-@keyframes fIn{from{opacity:0}to{opacity:1}}
-@keyframes sUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@media(max-width:1100px){.pg{grid-template-columns:repeat(3,1fr)}.ft{grid-template-columns:1fr 1fr}}
-@media(max-width:860px){#hero{grid-template-columns:1fr}.hero-r{min-height:55vw}#editorial{grid-template-columns:1fr}#newsletter{grid-template-columns:1fr;gap:3rem}.cat-grid{grid-template-columns:1fr 1fr}.cc.tall{grid-row:span 1}.mb{grid-template-columns:1fr;max-height:95vh;overflow-y:auto}.mi{min-height:280px}}
-@media(max-width:700px){.nav-links{display:none}.ham{display:flex}body{cursor:auto}#cur,#cur-ring{display:none}.pg{grid-template-columns:repeat(2,1fr);gap:1.2rem .8rem}.lb-grid{grid-template-columns:1fr 1fr}.lb.tall{grid-row:span 1}.ft{grid-template-columns:1fr}.nl-r{grid-template-columns:1fr}}
-@media(max-width:480px){section{padding:4rem 5vw}.h-stats{flex-wrap:wrap;gap:1.5rem}.cat-grid{grid-template-columns:1fr}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAISON NOIR — Fashion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f0eb;
+      --cream: #e8e0d5;
+      --gold: #c9a96e;
+      --muted: #8a7f75;
+      --dark: #1a1714;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom Cursor */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, width 0.3s, height 0.3s, background 0.3s;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s ease, width 0.3s, height 0.3s, opacity 0.3s;
+      opacity: 0.6;
+    }
+    .cursor.hover { width: 6px; height: 6px; background: var(--white); }
+    .cursor-ring.hover { width: 52px; height: 52px; opacity: 0.3; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+      transition: background 0.4s;
+    }
+    nav.scrolled { background: rgba(10,10,10,0.97); padding: 18px 48px; }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex; gap: 36px; list-style: none;
+    }
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.3s, color 0.3s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+    .nav-actions { display: flex; gap: 20px; align-items: center; }
+    .nav-icon {
+      background: none; border: none; color: var(--white);
+      font-size: 1.1rem; cursor: none; opacity: 0.75;
+      transition: opacity 0.3s, color 0.3s;
+    }
+    .nav-icon:hover { opacity: 1; color: var(--gold); }
+
+    .cart-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--gold); color: var(--black);
+      border-radius: 50%;
+      width: 18px; height: 18px;
+      font-size: 0.6rem;
+      font-weight: 500;
+      position: relative; top: -8px; left: -8px;
+    }
+
+    /* HERO */
+    .hero {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 64px 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-tag {
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 1s 0.4s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      font-weight: 300;
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      opacity: 0;
+      animation: fadeUp 1s 0.6s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+
+    .hero-sub {
+      margin-top: 24px;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      max-width: 320px;
+      line-height: 1.9;
+      opacity: 0;
+      animation: fadeUp 1s 0.8s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 48px;
+      display: flex; gap: 20px; align-items: center;
+      opacity: 0;
+      animation: fadeUp 1s 1s forwards;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--gold);
+      color: var(--black);
+      text-decoration: none;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .btn-primary:hover { background: var(--white); transform: translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.65;
+      transition: opacity 0.3s;
+    }
+    .btn-ghost::after {
+      content: '→';
+      transition: transform 0.3s;
+    }
+    .btn-ghost:hover { opacity: 1; }
+    .btn-ghost:hover::after { transform: translateX(4px); }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(20%) contrast(1.05);
+      transform: scale(1.04);
+      animation: zoomOut 2s 0.2s forwards;
+    }
+
+    .hero-right::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--black) 0%, transparent 30%),
+                  linear-gradient(to top, rgba(10,10,10,0.4) 0%, transparent 50%);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px; right: 48px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 8px;
+      z-index: 10;
+      opacity: 0;
+      animation: fadeIn 1.2s 1.4s forwards;
+    }
+    .hero-scroll span {
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+
+    /* MARQUEE */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid rgba(201,169,110,0.2);
+      border-bottom: 1px solid rgba(201,169,110,0.2);
+      background: rgba(201,169,110,0.04);
+      padding: 14px 0;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 60px;
+      animation: marquee 22s linear infinite;
+      width: max-content;
+    }
+    .marquee-track span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      opacity: 0.7;
+      white-space: nowrap;
+    }
+    .marquee-track .dot {
+      font-style: normal;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.5rem;
+      opacity: 0.4;
+    }
+
+    /* SECTIONS */
+    section { padding: 100px 0; }
+
+    .section-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.1;
+    }
+
+    /* FEATURED COLLECTION */
+    .collection { padding: 100px 64px; }
+
+    .collection-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+    }
+
+    .collection-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 2px;
+    }
+
+    .product-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--dark);
+      cursor: none;
+    }
+    .product-card:first-child { grid-row: span 2; }
+
+    .product-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 320px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(15%);
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  filter 0.5s;
+    }
+    .product-card:first-child img { min-height: 700px; }
+
+    .product-card:hover img { transform: scale(1.06); filter: grayscale(0%); }
+
+    .product-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 55%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 28px;
+      transition: background 0.4s;
+    }
+    .product-card:hover .product-overlay {
+      background: linear-gradient(to top, rgba(10,10,10,0.92) 0%, transparent 65%);
+    }
+
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .product-card:first-child .product-name { font-size: 1.9rem; }
+
+    .product-price {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+    }
+
+    .product-action {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 14px;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .product-card:hover .product-action { opacity: 1; transform: translateY(0); }
+
+    .product-tag {
+      position: absolute;
+      top: 20px; left: 20px;
+      background: var(--gold);
+      color: var(--black);
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+    }
+
+    .wishlist-btn {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: rgba(10,10,10,0.5);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--white);
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      cursor: none;
+      transition: background 0.3s, border-color 0.3s;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.3s, transform 0.3s, background 0.3s;
+    }
+    .product-card:hover .wishlist-btn { opacity: 1; transform: translateY(0); }
+    .wishlist-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
+
+    /* EDITORIAL */
+    .editorial {
+      padding: 0 64px 100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      min-height: 70vh;
+    }
+
+    .editorial-image {
+      position: relative; overflow: hidden;
+    }
+    .editorial-image img {
+      width: 100%; height: 100%;
+      min-height: 600px;
+      object-fit: cover;
+      filter: grayscale(25%);
+      transition: transform 0.8s, filter 0.5s;
+    }
+    .editorial-image:hover img { transform: scale(1.04); filter: grayscale(0%); }
+
+    .editorial-content {
+      background: var(--dark);
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 80px;
+    }
+
+    .editorial-content p {
+      margin-top: 24px;
+      font-size: 0.8rem;
+      line-height: 2;
+      color: var(--muted);
+      max-width: 400px;
+    }
+
+    .divider {
+      width: 60px; height: 1px;
+      background: var(--gold);
+      margin: 32px 0;
+    }
+
+    .editorial-stats {
+      display: flex; gap: 48px; margin-top: 8px;
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* CATEGORIES */
+    .categories { padding: 100px 64px; }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-top: 56px;
+    }
+
+    .category-card {
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+    }
+    .category-card img {
+      width: 100%; height: 440px;
+      object-fit: cover;
+      filter: grayscale(20%);
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s;
+    }
+    .category-card:hover img { transform: scale(1.08); filter: grayscale(0%); }
+
+    .category-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.8) 0%, rgba(10,10,10,0.1) 50%);
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px 24px;
+    }
+    .category-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .category-count {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* NEWSLETTER */
+    .newsletter {
+      margin: 0 64px 100px;
+      background: var(--dark);
+      padding: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      border: 1px solid rgba(201,169,110,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 280px; height: 280px;
+      border: 60px solid rgba(201,169,110,0.06);
+      border-radius: 50%;
+    }
+
+    .newsletter p {
+      margin-top: 16px;
+      font-size: 0.75rem;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .newsletter-form {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .newsletter-form input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white);
+      padding: 16px 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .newsletter-form input::placeholder { color: var(--muted); }
+    .newsletter-form input:focus { border-color: var(--gold); }
+
+    .newsletter-form .btn-primary {
+      align-self: flex-start;
+      border: none;
+      cursor: none;
+    }
+
+    .newsletter-note {
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      opacity: 0.6;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 64px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+    .footer-brand p {
+      margin-top: 20px;
+      font-size: 0.72rem;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 260px;
+    }
+    .footer-social {
+      display: flex; gap: 14px; margin-top: 28px;
+    }
+    .social-link {
+      width: 34px; height: 34px;
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+    .footer-col h4 {
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 12px; }
+    .footer-col ul a {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-col ul a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-bottom p {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      opacity: 0.6;
+    }
+    .payment-icons { display: flex; gap: 10px; }
+    .payment-icon {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 4px 10px;
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes zoomOut {
+      from { transform: scale(1.08); }
+      to   { transform: scale(1); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hamburger Mobile */
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: none;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 1px;
+      background: var(--white);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    @media (max-width: 1024px) {
+      nav { padding: 22px 32px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { position: absolute; inset: 0; z-index: 0; }
+      .hero-left { z-index: 2; background: linear-gradient(to right, rgba(10,10,10,0.9) 50%, transparent); }
+      .collection-grid { grid-template-columns: 1fr 1fr; }
+      .product-card:first-child { grid-column: span 2; }
+      .editorial { grid-template-columns: 1fr; }
+      .editorial-content { padding: 48px; min-height: 400px; }
+      .categories-grid { grid-template-columns: 1fr 1fr; }
+      .newsletter { grid-template-columns: 1fr; gap: 40px; padding: 48px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 18px 20px; }
+      .collection, .categories, .newsletter, .editorial { padding-left: 20px; padding-right: 20px; }
+      .newsletter { margin: 0 20px 60px; }
+      footer { padding: 40px 20px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .collection-grid { grid-template-columns: 1fr; }
+      .product-card:first-child { grid-column: auto; }
+      .categories-grid { grid-template-columns: 1fr 1fr; }
+      .hero-left { padding: 0 24px 60px; }
+      .collection-header { flex-direction: column; gap: 20px; align-items: flex-start; }
+      .editorial-stats { gap: 28px; }
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 32px; right: 32px;
+      background: var(--gold);
+      color: var(--black);
+      padding: 14px 24px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      z-index: 9999;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: transform 0.4s, opacity 0.4s;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
 </head>
 <body>
-<div id="cur"></div><div id="cur-ring"></div>
-<div class="topbar">Free shipping on orders over ₹6,000 &nbsp;·&nbsp; AW25 Collection — Now Live</div>
-<nav>
-  <a class="nav-logo" href="#">VÖ<span>RN</span></a>
-  <ul class="nav-links">
-    <li><a href="#categories">Collections</a></li>
-    <li><a href="#products">Shop</a></li>
-    <li><a href="#lookbook">Lookbook</a></li>
-    <li><a href="#editorial">Craft</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="nav-btn" id="searchBtn"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m18 18 3.5 3.5"/></svg></button>
-    <div class="c-wrap"><button class="nav-btn" id="cartBtn"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></button><span class="c-badge" id="cBadge">0</span></div>
-    <button class="ham" id="hamBtn"><span></span><span></span><span></span></button>
-  </div>
-</nav>
-<div class="mob-nav" id="mobNav">
-  <button class="mob-cls" id="mobCls">✕</button>
-  <a href="#categories" onclick="cMob()">Collections</a>
-  <a href="#products" onclick="cMob()">Shop</a>
-  <a href="#lookbook" onclick="cMob()">Lookbook</a>
-  <a href="#editorial" onclick="cMob()">Craft</a>
-</div>
-<div class="srch-ov" id="srchOv">
-  <button class="srch-close" onclick="cSrch()">✕</button>
-  <div class="srch-label">SEARCH</div>
-  <div class="srch-field">
-    <svg width="20" height="20" fill="none" stroke="var(--muted)" stroke-width="1.4" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m18 18 3.5 3.5"/></svg>
-    <input type="text" id="srchInp" placeholder="Jackets, trousers, shirts…"/>
-  </div>
-  <div class="srch-hint" id="srchHint">Type to search the collection</div>
-</div>
-<section id="hero">
-  <div class="hero-l">
-    <div class="bg-num">I</div>
-    <div class="h-eye">Autumn / Winter 2025</div>
-    <h1 class="h-title">DRESS<br><span class="ac it">with</span><br>INTENT</h1>
-    <p class="h-body">VÖRN is a men's luxury house built on the belief that clothing is identity. Each garment is designed to outlast fashion — constructed with intention, worn with conviction.</p>
-    <div class="h-cta">
-      <a href="#products" class="btn-fill">Shop the Collection →</a>
-      <a href="#lookbook" class="btn-line">View Lookbook</a>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">Added to bag ✓</div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">Maison <span>Noir</span></a>
+    <ul class="nav-links">
+      <li><a href="#collection">Collection</a></li>
+      <li><a href="#categories">Categories</a></li>
+      <li><a href="#editorial">Editorial</a></li>
+      <li><a href="#">Lookbook</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="nav-icon">&#128269;</button>
+      <button class="nav-icon">&#9825;</button>
+      <button class="nav-icon" onclick="showToast('Cart opened')">&#128717;<span class="cart-badge">2</span></button>
+      <button class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <div class="h-stats">
-      <div><span class="sv">AW25</span><div class="sl">New Collection</div></div>
-      <div><span class="sv">120+</span><div class="sl">Pieces Available</div></div>
-      <div><span class="sv">12</span><div class="sl">Master Artisans</div></div>
-    </div>
-  </div>
-  <div class="hero-r">
-    <div class="hero-r-bg"></div>
-    <div class="hero-vw">
-      <div class="hero-shape"><div class="hero-shape-i"><div class="h-glyph">VN</div></div></div>
-      <div class="hero-tag"><div class="hero-tag-l">Featured Piece</div><div class="hero-tag-v">The Obsidian Coat</div></div>
-      <div class="hero-line"></div>
-    </div>
-  </div>
-</section>
-<div class="ticker"><div class="ticker-t">
-  <span>New Arrivals</span><span class="sep">◆</span><span>AW25 Collection</span><span class="sep">◆</span><span>Complimentary Shipping</span><span class="sep">◆</span><span>Tailored to Order</span><span class="sep">◆</span><span>Merino Essentials</span><span class="sep">◆</span><span>Japanese Denim</span><span class="sep">◆</span><span>Scottish Cashmere</span><span class="sep">◆</span>
-  <span>New Arrivals</span><span class="sep">◆</span><span>AW25 Collection</span><span class="sep">◆</span><span>Complimentary Shipping</span><span class="sep">◆</span><span>Tailored to Order</span><span class="sep">◆</span><span>Merino Essentials</span><span class="sep">◆</span><span>Japanese Denim</span><span class="sep">◆</span><span>Scottish Cashmere</span><span class="sep">◆</span>
-</div></div>
-<section id="categories">
-  <div class="cat-hdr rv">
-    <div><div class="s-lbl">Browse by Category</div><h2 class="s-ttl">THE <span class="em">Collections</span></h2></div>
-    <a href="#products" class="lnk">All Pieces →</a>
-  </div>
-  <div class="cat-grid rv">
-    <div class="cc tall" onclick="fBy('Outerwear',null)">
-      <div class="cc-in" style="background:linear-gradient(170deg,#1a1814,#0e0e0c,#1a1a16)"><div class="cc-gl">OW</div><div class="cc-ov"></div><div class="cc-info"><div class="cc-name">Outerwear</div><div class="cc-sub">32 Pieces · Coats, Blazers, Jackets</div></div></div>
-    </div>
-    <div class="cc" onclick="fBy('Shirts',null)">
-      <div class="cc-in" style="background:linear-gradient(160deg,#22201a,#181610)"><div class="cc-gl">SH</div><div class="cc-ov"></div><div class="cc-info"><div class="cc-name">Shirts</div><div class="cc-sub">24 Pieces · Linen, Poplin, Oxford</div></div></div>
-    </div>
-    <div class="cc" onclick="fBy('Knitwear',null)">
-      <div class="cc-in" style="background:linear-gradient(145deg,#1e1c16,#141210)"><div class="cc-gl">KN</div><div class="cc-ov"></div><div class="cc-info"><div class="cc-name">Knitwear</div><div class="cc-sub">18 Pieces · Merino, Cashmere</div></div></div>
-    </div>
-    <div class="cc" onclick="fBy('Trousers',null)">
-      <div class="cc-in" style="background:linear-gradient(150deg,#2a2820,#1a1810)"><div class="cc-gl">TR</div><div class="cc-ov"></div><div class="cc-info"><div class="cc-name">Trousers</div><div class="cc-sub">20 Pieces · Wool, Denim, Chino</div></div></div>
-    </div>
-    <div class="cc" onclick="fBy('Accessories',null)">
-      <div class="cc-in" style="background:linear-gradient(160deg,#1e1c1a,#141412)"><div class="cc-gl">AC</div><div class="cc-ov"></div><div class="cc-info"><div class="cc-name">Accessories</div><div class="cc-sub">28 Pieces · Scarves, Belts, Shoes</div></div></div>
-    </div>
-  </div>
-</section>
-<section id="products">
-  <div class="ph rv">
-    <div><div class="s-lbl">The Edit</div><h2 class="s-ttl">FEATURED <span class="em">Pieces</span></h2></div>
-    <div style="display:flex;flex-direction:column;gap:1rem;align-items:flex-end">
-      <div class="fr" id="fRow">
-        <button class="fb active" onclick="fBy('All',this)">All</button>
-        <button class="fb" onclick="fBy('Outerwear',this)">Outerwear</button>
-        <button class="fb" onclick="fBy('Shirts',this)">Shirts</button>
-        <button class="fb" onclick="fBy('Knitwear',this)">Knitwear</button>
-        <button class="fb" onclick="fBy('Trousers',this)">Trousers</button>
-        <button class="fb" onclick="fBy('Accessories',this)">Accessories</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-tag">SS 2026 Collection</p>
+      <h1 class="hero-title">
+        Where<br><em>Silence</em><br>Speaks
+      </h1>
+      <p class="hero-sub">Crafted for those who understand that true luxury whispers — never shouts.</p>
+      <div class="hero-cta">
+        <a href="#collection" class="btn-primary">Explore Collection</a>
+        <a href="#editorial" class="btn-ghost">Our Story</a>
       </div>
-      <div class="sw"><span class="sw-lbl">Sort</span><select class="ss" id="sortSel" onchange="resort()"><option value="default">Featured</option><option value="asc">Price: Low → High</option><option value="desc">Price: High → Low</option><option value="az">Name A–Z</option></select></div>
+    </div>
+    <div class="hero-right">
+      <img class="hero-img"
+        src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85&auto=format"
+        alt="Fashion Editorial" />
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Free Shipping on Orders Over ₹15,000</span>
+      <span class="dot">◆</span>
+      <span>New Arrivals — Spring Summer 2026</span>
+      <span class="dot">◆</span>
+      <span>Handcrafted in Italy</span>
+      <span class="dot">◆</span>
+      <span>Sustainable Luxury</span>
+      <span class="dot">◆</span>
+      <span>Free Returns Within 30 Days</span>
+      <span class="dot">◆</span>
+      <span>Free Shipping on Orders Over ₹15,000</span>
+      <span class="dot">◆</span>
+      <span>New Arrivals — Spring Summer 2026</span>
+      <span class="dot">◆</span>
+      <span>Handcrafted in Italy</span>
+      <span class="dot">◆</span>
+      <span>Sustainable Luxury</span>
+      <span class="dot">◆</span>
+      <span>Free Returns Within 30 Days</span>
+      <span class="dot">◆</span>
     </div>
   </div>
-  <div class="pg" id="prodGrid"></div>
-</section>
-<section id="editorial">
-  <div class="ev rv"><div class="ev-gl">VN</div><div class="ev-corner">AW 2025</div></div>
-  <div class="rv d2">
-    <div class="s-lbl">The Philosophy</div>
-    <h2 class="s-ttl">BUILT TO <span class="em">Endure</span></h2>
-    <div class="s-div"></div>
-    <p style="font-size:.85rem;line-height:1.95;color:var(--off);margin-bottom:1.2rem">At VÖRN, we reject disposable fashion. Every piece is conceived in our London studio and executed by master artisans across Italy, Japan, and Scotland.</p>
-    <p style="font-size:.85rem;line-height:1.95;color:var(--off)">We source only heritage fabrics — Super 180s wool from Zegna mills, 18.5 micron merino from Biella, and selvedge denim from Kojima, Japan.</p>
-    <div class="ef-grid">
-      <div class="ef"><div class="ef-icon">◈</div><div class="ef-ttl">Heritage Fabrics</div><div class="ef-desc">Century-old mills across Europe and Japan</div></div>
-      <div class="ef"><div class="ef-icon">✦</div><div class="ef-ttl">Hand Finished</div><div class="ef-desc">Every garment finished by our master tailors</div></div>
-      <div class="ef"><div class="ef-icon">◉</div><div class="ef-ttl">Made to Last</div><div class="ef-desc">Lifetime repair guarantee on all core pieces</div></div>
-      <div class="ef"><div class="ef-icon">⊛</div><div class="ef-ttl">Zero Waste</div><div class="ef-desc">All offcuts recycled or donated to artisan schools</div></div>
-    </div>
-  </div>
-</section>
-<section id="lookbook">
-  <div class="rv"><div class="s-lbl">Visual Journal</div><h2 class="s-ttl">AW25 <span class="em">Lookbook</span></h2></div>
-  <div class="lb-grid rv">
-    <div class="lb tall"><div class="lb-in" style="background:linear-gradient(170deg,#1a1814,#0d0d0b)"><div class="lb-gl">I</div><div class="lb-ov"><div class="lb-txt">THE COAT<br><span style="font-family:'EB Garamond',serif;font-style:italic;font-size:.85rem">Obsidian Series</span></div></div></div></div>
-    <div class="lb"><div class="lb-in" style="background:linear-gradient(145deg,#22201a,#16140e)"><div class="lb-gl" style="font-size:4rem">II</div><div class="lb-ov"><div class="lb-txt">THE SHIRT<br><span style="font-family:'EB Garamond',serif;font-style:italic;font-size:.85rem">Linen Edit</span></div></div></div></div>
-    <div class="lb"><div class="lb-in" style="background:linear-gradient(160deg,#1e1c18,#121210)"><div class="lb-gl" style="font-size:4rem">III</div><div class="lb-ov"><div class="lb-txt">THE KNIT<br><span style="font-family:'EB Garamond',serif;font-style:italic;font-size:.85rem">Merino Core</span></div></div></div></div>
-    <div class="lb"><div class="lb-in" style="background:linear-gradient(150deg,#2a2820,#181614)"><div class="lb-gl" style="font-size:4rem">IV</div><div class="lb-ov"><div class="lb-txt">TROUSERS<br><span style="font-family:'EB Garamond',serif;font-style:italic;font-size:.85rem">Tailored Line</span></div></div></div></div>
-    <div class="lb"><div class="lb-in" style="background:linear-gradient(140deg,#1c1a16,#0e0e0c)"><div class="lb-gl" style="font-size:4rem">V</div><div class="lb-ov"><div class="lb-txt">ACCESSORIES<br><span style="font-family:'EB Garamond',serif;font-style:italic;font-size:.85rem">The Details</span></div></div></div></div>
-  </div>
-</section>
-<section id="newsletter">
-  <div class="nl-l rv">
-    <div class="s-lbl">Inner Circle</div>
-    <h2 class="s-ttl">STAY <span class="em">Informed</span></h2>
-    <div class="s-div"></div>
-    <p>Early access to new drops, exclusive styling notes, and private trunk show invitations. For the man who dresses with intention.</p>
-    <form class="nl-form" onsubmit="subNL(event)"><input class="nl-inp" type="email" placeholder="Your email address" required/><button class="nl-sub" type="submit">Subscribe</button></form>
-  </div>
-  <div class="nl-r rv d2">
-    <div class="nlf"><div class="nlf-t">New Drops First</div><div class="nlf-d">Access new pieces before public release</div></div>
-    <div class="nlf"><div class="nlf-t">Style Notes</div><div class="nlf-d">Monthly editorial on building a lasting wardrobe</div></div>
-    <div class="nlf"><div class="nlf-t">Trunk Shows</div><div class="nlf-d">Private events in Mumbai, Delhi, and Bangalore</div></div>
-    <div class="nlf"><div class="nlf-t">Member Pricing</div><div class="nlf-d">Exclusive pricing on archival pieces</div></div>
-  </div>
-</section>
-<footer>
-  <div class="ft">
-    <div><a class="fl" href="#">VÖ<span>RN</span></a><p class="fa">Men's luxury fashion built on heritage, craft, and the belief that less — made better — is always more.</p></div>
-    <div class="fc"><h5>Shop</h5><a href="#">New Arrivals</a><a href="#">Outerwear</a><a href="#">Shirts</a><a href="#">Knitwear</a><a href="#">Trousers</a><a href="#">Accessories</a></div>
-    <div class="fc"><h5>House</h5><a href="#">Our Story</a><a href="#">Craftsmanship</a><a href="#">Sustainability</a><a href="#">Press</a><a href="#">Careers</a></div>
-    <div class="fc"><h5>Support</h5><a href="#">Shipping & Returns</a><a href="#">Size Guide</a><a href="#">Care Instructions</a><a href="#">Alterations</a><a href="#">Contact</a></div>
-  </div>
-  <div class="fb2"><p class="fc2">© 2025 VÖRN. All rights reserved.</p><div class="fs"><a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">LinkedIn</a></div></div>
-</footer>
-<div class="c-ov" id="cOv" onclick="cCart()"></div>
-<div class="c-drw" id="cDrw">
-  <div class="c-hd"><div class="c-ttl">YOUR BAG</div><button class="c-cls" onclick="cCart()">✕</button></div>
-  <div class="c-bd" id="cBd"></div>
-  <div class="c-ft" id="cFt" style="display:none">
-    <div class="c-row"><span>Subtotal</span><span id="cSub">₹0</span></div>
-    <div class="c-row"><span>Shipping</span><span>Complimentary</span></div>
-    <div class="c-row tot"><span>Total</span><span id="cTot">₹0</span></div>
-    <button class="c-co">Proceed to Checkout</button>
-  </div>
-</div>
-<div class="mo" id="mOv" onclick="hMO(event)">
-  <div class="mb" id="mBx">
-    <button class="mc" onclick="cMod()">✕</button>
-    <div class="mi" id="mImg"></div>
-    <div class="minfo" id="mInf"></div>
-  </div>
-</div>
-<div class="toast" id="toast"></div>
-<script>
-const PRODS=[
-  {id:1,name:"Obsidian Wool Coat",cat:"Outerwear",price:68500,badge:"new",e:"◈",colors:["#1a1a18","#3a3530","#4a3828"],sizes:["S","M","L","XL"],desc:"Double-faced Super 180s wool overcoat, hand-sewn by master tailors in Naples. Horn buttons, silk lining, hand-stitched lapels. The centrepiece of AW25.",stars:5},
-  {id:2,name:"Brushed Cashmere Blazer",cat:"Outerwear",price:48000,badge:"exc",e:"✦",colors:["#2a2820","#1a1a16","#3d3530"],sizes:["S","M","L","XL","XXL"],desc:"Single-breasted blazer in Loro Piana brushed cashmere. Patch pockets, working cuffs, half-canvas construction. Effortlessly between casual and formal.",stars:5},
-  {id:3,name:"Japanese Selvedge Trousers",cat:"Trousers",price:22800,badge:"new",e:"▣",colors:["#1a1612","#3a3020","#5a4a38"],sizes:["30","32","34","36","38"],desc:"Cut from Kojima selvedge denim in a relaxed high-rise silhouette. Raw hem, coin pocket, Japanese-style hidden rivet. Ages beautifully over years.",stars:4},
-  {id:4,name:"Linen Popover Shirt",cat:"Shirts",price:11200,badge:"",e:"◉",colors:["#E8DDD0","#2a2820","#A8956E"],sizes:["S","M","L","XL","XXL"],desc:"Washed Italian linen in an easy popover cut. Split hem, chest pocket, mother-of-pearl buttons, and a band collar. The essential summer shirt.",stars:4},
-  {id:5,name:"Merino Rollneck",cat:"Knitwear",price:16400,badge:"",e:"⊛",colors:["#2a2820","#C8A870","#3a3a36"],sizes:["S","M","L","XL"],desc:"18.5 micron Merino wool in a refined ribbed rollneck. Fully fashioned, minimal bulk, ultra-soft handle. Wears beautifully under a coat.",stars:5},
-  {id:6,name:"Cashmere Scarf",cat:"Accessories",price:8600,badge:"sale",oldPrice:12000,e:"✾",colors:["#3a3530","#8B6B35","#C8A870"],sizes:["One Size"],desc:"Plain-weave Scottish cashmere, 200×70cm. Fringed ends, hand-rolled edges. The most important accessory in a considered wardrobe.",stars:5},
-  {id:7,name:"Super 120s Wool Trouser",cat:"Trousers",price:19500,badge:"",e:"◇",colors:["#2a2820","#1a1a14","#3d3028"],sizes:["30","32","34","36"],desc:"Tailored high-rise trouser in Zegna Super 120s wool. Extended waistband, no break hem, hand-stitched side seams. The backbone of a formal wardrobe.",stars:5},
-  {id:8,name:"Oxford Button-Down",cat:"Shirts",price:9800,badge:"new",e:"◑",colors:["#F4F2EE","#2a2820","#A8956E"],sizes:["S","M","L","XL","XXL"],desc:"Pinpoint Oxford cotton, classic BD silhouette. Soft roll collar, box pleat, split hem. An essential piece that ages with grace.",stars:4},
-  {id:9,name:"Leather Bifold Wallet",cat:"Accessories",price:5800,badge:"",e:"◈",colors:["#2a1e14","#1a1a16","#8B6B35"],sizes:["One Size"],desc:"Vegetable-tanned bridle leather, burnished by hand. Six card slots, note compartment, slim profile that improves dramatically with age.",stars:5},
-  {id:10,name:"Shawl-Collar Cardigan",cat:"Knitwear",price:21000,badge:"exc",e:"❧",colors:["#3a3530","#C8A870","#1a1a14"],sizes:["S","M","L","XL"],desc:"Heavy-gauge cashmere-merino blend in a generous shawl collar. Four-button front, deep pockets, relaxed body — indoor layer or light outerwear.",stars:5},
-  {id:11,name:"Pleated Chino",cat:"Trousers",price:14800,badge:"new",e:"▤",colors:["#C8B89A","#2a2820","#3a3020"],sizes:["30","32","34","36","38"],desc:"Garment-dyed Italian cotton, generous double-pleat cut. High rise, side adjusters, clean hem. Bridges tailored and casual with ease.",stars:4},
-  {id:12,name:"Nubuck Derby Shoes",cat:"Accessories",price:32000,badge:"",e:"◎",colors:["#2a1e14","#8B6B35","#1a1a16"],sizes:["7","8","9","10","11"],desc:"Hand-welted nubuck leather derby. Double leather sole, natural edge, leather insole that moulds to your foot. Made in Northampton.",stars:5},
-];
-let cart=[],af='All',wishes=new Set(),sSize=null,sColor=0,cProd=null;
-// CURSOR
-const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
-setInterval(()=>{rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px'},16);
-function addHover(el){el.addEventListener('mouseenter',()=>{cur.classList.add('h');ring.classList.add('h')});el.addEventListener('mouseleave',()=>{cur.classList.remove('h');ring.classList.remove('h')})}
-document.querySelectorAll('a,button,[onclick]').forEach(addHover);
-// SEARCH
-document.getElementById('searchBtn').addEventListener('click',()=>{document.getElementById('srchOv').classList.add('open');document.getElementById('srchInp').focus();document.body.style.overflow='hidden'});
-function cSrch(){document.getElementById('srchOv').classList.remove('open');document.body.style.overflow=''}
-document.getElementById('srchInp').addEventListener('input',function(){
-  const q=this.value.toLowerCase().trim(),h=document.getElementById('srchHint');
-  if(!q){h.textContent='Type to search the collection';return}
-  const r=PRODS.filter(p=>p.name.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q));
-  h.textContent=r.length+' result'+(r.length!==1?'s':'')+' found';
-  renderGrid(r);cSrch();
-});
-// MOB NAV
-document.getElementById('hamBtn').addEventListener('click',()=>document.getElementById('mobNav').classList.add('open'));
-document.getElementById('mobCls').addEventListener('click',cMob);
-function cMob(){document.getElementById('mobNav').classList.remove('open')}
-// PRODUCTS
-function getList(f){
-  let l=f==='All'?[...PRODS]:PRODS.filter(p=>p.cat===f);
-  const s=document.getElementById('sortSel').value;
-  if(s==='asc')l.sort((a,b)=>a.price-b.price);
-  else if(s==='desc')l.sort((a,b)=>b.price-a.price);
-  else if(s==='az')l.sort((a,b)=>a.name.localeCompare(b.name));
-  return l;
-}
-function stars(n){return Array(5).fill(0).map((_,i)=>`<svg class="st ${i<n?'f':'e'}" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`).join('')}
-function renderGrid(list){
-  const g=document.getElementById('prodGrid');
-  g.innerHTML=list.map(p=>`
-    <div class="pc rv" onclick="oMod(${p.id})">
-      <div class="pi">
-        <div class="pp">${p.e}</div>
-        ${p.badge?`<span class="pbg ${p.badge}">${p.badge==='exc'?'Exclusive':p.badge==='new'?'New':'Sale'}</span>`:''}
-        <div class="pha" onclick="event.stopPropagation()">
-          <button class="padd" onclick="qAdd(${p.id})">Add to Bag</button>
-          <div class="pqr">
-            <button class="pqb ${wishes.has(p.id)?'wished':''}" id="w${p.id}" onclick="tWish(${p.id})" style="flex:1;gap:.4rem;font-size:.58rem;letter-spacing:.1em">
-              <svg width="12" height="12" fill="${wishes.has(p.id)?'var(--accent)':'none'}" stroke="${wishes.has(p.id)?'var(--accent)':'currentColor'}" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-              Wishlist
-            </button>
-            <button class="pqb" onclick="oMod(${p.id})">
-              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="pb">VÖRN — ${p.cat}</div>
-      <div class="pn">${p.name}</div>
-      <div class="ppr"><span class="pp2">₹${p.price.toLocaleString('en-IN')}</span>${p.oldPrice?`<span class="po">₹${p.oldPrice.toLocaleString('en-IN')}</span>`:''}</div>
-      <div class="pst">${stars(p.stars)}</div>
-    </div>
-  `).join('');
-  g.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
-}
-function fBy(f,btn){
-  af=f;
-  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));
-  if(btn)btn.classList.add('active');
-  else document.querySelectorAll('.fb').forEach(b=>{if(b.textContent.trim()===f||(f==='All'&&b.textContent.trim()==='All'))b.classList.add('active')});
-  renderGrid(getList(f));
-  document.getElementById('products').scrollIntoView({behavior:'smooth'});
-}
-function resort(){renderGrid(getList(af))}
-// WISHLIST
-function tWish(id){
-  if(wishes.has(id)){wishes.delete(id);showToast('Removed from wishlist')}
-  else{wishes.add(id);showToast('Added to wishlist ♡')}
-  renderGrid(getList(af));
-}
-// MODAL
-function oMod(id){
-  cProd=PRODS.find(p=>p.id===id);sSize=cProd.sizes[0];sColor=0;
-  const p=cProd;
-  document.getElementById('mImg').innerHTML=`<span style="font-size:9rem">${p.e}</span>${p.badge?`<span class="mib pbg ${p.badge}">${p.badge==='exc'?'Exclusive':p.badge==='new'?'New':'Sale'}</span>`:''}`;
-  document.getElementById('mInf').innerHTML=`
-    <div class="m-br">VÖRN · ${p.cat}</div>
-    <div class="m-nm">${p.name}</div>
-    <div class="m-pr"><span class="m-p">₹${p.price.toLocaleString('en-IN')}</span>${p.oldPrice?`<span class="m-op">₹${p.oldPrice.toLocaleString('en-IN')}</span>`:''}</div>
-    <div class="pst">${stars(p.stars)}</div>
-    <div class="m-ds">${p.desc}</div>
-    <div><div class="m-lb">Colour</div><div class="mcl">${p.colors.map((c,i)=>`<div class="mcs${i===0?' a':''}" style="background:${c}" onclick="sCl(${i},this)"></div>`).join('')}</div></div>
-    <div><div class="m-lb">Size</div><div class="msz">${p.sizes.map((s,i)=>`<button class="msb${i===0?' a':''}" onclick="sSz('${s}',this)">${s}</button>`).join('')}</div></div>
-    <button class="madd" id="mAddBtn" onclick="addCart(${p.id})">Add to Bag</button>
-  `;
-  document.getElementById('mOv').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function cMod(){document.getElementById('mOv').classList.remove('open');document.body.style.overflow=''}
-function hMO(e){if(e.target===document.getElementById('mOv'))cMod()}
-function sSz(s,btn){sSize=s;document.querySelectorAll('.msb').forEach(b=>b.classList.remove('a'));btn.classList.add('a')}
-function sCl(i,el){sColor=i;document.querySelectorAll('.mcs').forEach(s=>s.classList.remove('a'));el.classList.add('a')}
-// CART
-function qAdd(id){const p=PRODS.find(x=>x.id===id);aItem(p,p.sizes[0])}
-function addCart(id){
-  const p=PRODS.find(x=>x.id===id);aItem(p,sSize);
-  const btn=document.getElementById('mAddBtn');
-  btn.textContent='✓ Added';btn.classList.add('done');
-  setTimeout(()=>{btn.textContent='Add to Bag';btn.classList.remove('done')},2000);
-}
-function aItem(p,size){
-  const k=`${p.id}|${size}`,ex=cart.find(i=>i.k===k);
-  if(ex)ex.qty++;else cart.push({k,id:p.id,name:p.name,price:p.price,size,e:p.e,qty:1});
-  uCart();showToast(p.name+' added to bag');
-}
-function chQty(k,d){const i=cart.find(x=>x.k===k);if(!i)return;i.qty+=d;if(i.qty<=0)cart=cart.filter(x=>x.k!==k);uCart()}
-function rmItem(k){cart=cart.filter(x=>x.k!==k);uCart();showToast('Item removed')}
-function uCart(){
-  const tot=cart.reduce((s,i)=>s+i.qty,0);
-  const badge=document.getElementById('cBadge');
-  badge.textContent=tot;badge.style.display=tot>0?'flex':'none';
-  const bd=document.getElementById('cBd'),ft=document.getElementById('cFt');
-  if(!cart.length){bd.innerHTML=`<div class="c-emp"><div class="c-eg">∅</div><p>Your bag is empty.<br>Explore the collection.</p></div>`;ft.style.display='none';return}
-  ft.style.display='block';
-  bd.innerHTML=cart.map(i=>`
-    <div class="c-item">
-      <div class="c-ii">${i.e}</div>
+
+  <!-- FEATURED COLLECTION -->
+  <section class="collection" id="collection">
+    <div class="collection-header reveal">
       <div>
-        <div class="c-in">${i.name}</div>
-        <div class="c-im">Size: ${i.size}</div>
-        <div class="c-qr">
-          <div class="c-qty"><button class="cq" onclick="chQty('${i.k}',-1)">−</button><span class="c-qn">${i.qty}</span><button class="cq" onclick="chQty('${i.k}',1)">+</button></div>
-          <span class="c-ip">₹${(i.price*i.qty).toLocaleString('en-IN')}</span>
+        <p class="section-tag">Featured Pieces</p>
+        <h2 class="section-title">The Edit</h2>
+      </div>
+      <a href="#" class="btn-ghost">View All Pieces</a>
+    </div>
+
+    <div class="collection-grid reveal">
+      <!-- Hero Product -->
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=900&q=80&auto=format" alt="Overcoat" />
+        <span class="product-tag">New</span>
+        <button class="wishlist-btn">♡</button>
+        <div class="product-overlay">
+          <p class="product-name">Noir Oversized Coat</p>
+          <p class="product-price">₹ 48,500</p>
+          <button class="product-action" onclick="showToast()">+ Add to Bag →</button>
         </div>
-        <button class="c-rm" onclick="rmItem('${i.k}')">Remove</button>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1594938298603-c8148c4b4a29?w=600&q=80&auto=format" alt="Dress" />
+        <button class="wishlist-btn">♡</button>
+        <div class="product-overlay">
+          <p class="product-name">Silk Column Dress</p>
+          <p class="product-price">₹ 32,000</p>
+          <button class="product-action" onclick="showToast()">+ Add to Bag →</button>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1551803091-e20673f15770?w=600&q=80&auto=format" alt="Blazer" />
+        <span class="product-tag">Best Seller</span>
+        <button class="wishlist-btn">♡</button>
+        <div class="product-overlay">
+          <p class="product-name">Tailored Blazer</p>
+          <p class="product-price">₹ 27,000</p>
+          <button class="product-action" onclick="showToast()">+ Add to Bag →</button>
+        </div>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1520367745676-56196632073f?w=600&q=80&auto=format" alt="Trousers" />
+        <button class="wishlist-btn">♡</button>
+        <div class="product-overlay">
+          <p class="product-name">Wide-Leg Trousers</p>
+          <p class="product-price">₹ 19,500</p>
+          <button class="product-action" onclick="showToast()">+ Add to Bag →</button>
+        </div>
+      </div>
+
+      <!-- Product 5 -->
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=80&auto=format" alt="Sheer Top" />
+        <span class="product-tag">Limited</span>
+        <button class="wishlist-btn">♡</button>
+        <div class="product-overlay">
+          <p class="product-name">Sheer Organza Top</p>
+          <p class="product-price">₹ 14,000</p>
+          <button class="product-action" onclick="showToast()">+ Add to Bag →</button>
+        </div>
       </div>
     </div>
-  `).join('');
-  const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  document.getElementById('cSub').textContent='₹'+sub.toLocaleString('en-IN');
-  document.getElementById('cTot').textContent='₹'+sub.toLocaleString('en-IN');
-}
-document.getElementById('cartBtn').addEventListener('click',oCart);
-function oCart(){document.getElementById('cDrw').classList.add('open');document.getElementById('cOv').classList.add('open');document.body.style.overflow='hidden'}
-function cCart(){document.getElementById('cDrw').classList.remove('open');document.getElementById('cOv').classList.remove('open');document.body.style.overflow=''}
-// TOAST
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600)}
-// NEWSLETTER
-function subNL(e){e.preventDefault();showToast('Welcome to the Inner Circle ✦');e.target.reset()}
-// REVEAL
-const rvObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rvObs.unobserve(e.target)}}),{threshold:.1});
-document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
-// INIT
-renderGrid(getList('All'));uCart();
-</script>
+  </section>
+
+  <!-- EDITORIAL SPLIT -->
+  <div class="editorial" id="editorial">
+    <div class="editorial-image reveal">
+      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=900&q=80&auto=format" alt="Editorial" />
+    </div>
+    <div class="editorial-content reveal">
+      <p class="section-tag">Our Philosophy</p>
+      <h2 class="section-title">Fashion as<br><em>Language</em></h2>
+      <div class="divider"></div>
+      <p>We believe clothing is a conversation. Each garment we create carries intention — from the weight of the fabric to the precision of every seam. Maison Noir was founded on the conviction that extraordinary design doesn't demand attention — it commands it.</p>
+      <div class="editorial-stats">
+        <div>
+          <div class="stat-num">12</div>
+          <div class="stat-label">Years of Craft</div>
+        </div>
+        <div>
+          <div class="stat-num">48</div>
+          <div class="stat-label">Countries</div>
+        </div>
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Sustainable</div>
+        </div>
+      </div>
+      <div style="margin-top: 40px;">
+        <a href="#" class="btn-primary">Read Our Story</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section class="categories" id="categories">
+    <div class="reveal" style="margin-bottom: 0;">
+      <p class="section-tag">Shop By</p>
+      <h2 class="section-title">Categories</h2>
+    </div>
+    <div class="categories-grid reveal">
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=600&q=80&auto=format" alt="Outerwear" />
+        <div class="category-overlay">
+          <p class="category-name">Outerwear</p>
+          <p class="category-count">24 pieces</p>
+        </div>
+      </div>
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80&auto=format" alt="Dresses" />
+        <div class="category-overlay">
+          <p class="category-name">Dresses</p>
+          <p class="category-count">38 pieces</p>
+        </div>
+      </div>
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1594938298603-c8148c4b4a29?w=600&q=80&auto=format" alt="Suits" />
+        <div class="category-overlay">
+          <p class="category-name">Tailoring</p>
+          <p class="category-count">19 pieces</p>
+        </div>
+      </div>
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1479064555552-3ef4979f8908?w=600&q=80&auto=format" alt="Accessories" />
+        <div class="category-overlay">
+          <p class="category-name">Accessories</p>
+          <p class="category-count">52 pieces</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <div class="newsletter reveal">
+    <div>
+      <p class="section-tag">Stay in the Know</p>
+      <h2 class="section-title" style="font-size: 2.4rem;">Private Access</h2>
+      <p>Join our inner circle for early access to new collections, exclusive events, and curated editorial content. Unsubscribe at any time.</p>
+    </div>
+    <div class="newsletter-form">
+      <input type="text" placeholder="Your Full Name" />
+      <input type="email" placeholder="Your Email Address" />
+      <button class="btn-primary" onclick="showToast('Welcome to Maison Noir ✓')">Subscribe Now</button>
+      <p class="newsletter-note">By subscribing, you agree to our Privacy Policy. No spam, ever.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">Maison <span>Noir</span></a>
+        <p>Luxury fashion crafted with purpose. Each piece is designed to transcend seasons and stand the test of time.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link">in</a>
+          <a href="#" class="social-link">ig</a>
+          <a href="#" class="social-link">tw</a>
+          <a href="#" class="social-link">pt</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Collections</h4>
+        <ul>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">SS 2026</a></li>
+          <li><a href="#">The Classics</a></li>
+          <li><a href="#">Sale</a></li>
+          <li><a href="#">Lookbook</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Size Guide</a></li>
+          <li><a href="#">Returns Policy</a></li>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Sustainability</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Stockists</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Maison Noir. All rights reserved.</p>
+      <div class="payment-icons">
+        <span class="payment-icon">VISA</span>
+        <span class="payment-icon">MC</span>
+        <span class="payment-icon">AMEX</span>
+        <span class="payment-icon">UPI</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = -100, my = -100, rx = -100, ry = -100;
+
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+    function animateCursor() {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    document.querySelectorAll('a, button, .product-card, .category-card').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); ring.classList.add('hover'); });
+      el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+    });
+
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => observer.observe(r));
+
+    // Toast
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg || 'Added to bag ✓';
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2600);
+    }
+
+    // Hamburger placeholder
+    function toggleMenu() {
+      alert('Mobile menu — connect your CMS or router here!');
+    }
+
+    // Wishlist toggle
+    document.querySelectorAll('.wishlist-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isLiked = btn.textContent.trim() === '♥';
+        btn.textContent = isLiked ? '♡' : '♥';
+        btn.style.background = isLiked ? '' : 'var(--gold)';
+        btn.style.color = isLiked ? '' : 'var(--black)';
+        if (!isLiked) showToast('Saved to wishlist ♥');
+      });
+    });
+  </script>
 </body>
 </html>
